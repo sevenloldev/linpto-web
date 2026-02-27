@@ -1,0 +1,92 @@
+---
+import Text from "@/components/fundations/elements/Text.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+
+const areas = [
+  {
+    title: "民事訴訟",
+    description: "處理各類民事糾紛，包括債務糾紛、損害賠償、契約爭議等，以專業素養維護當事人權益。",
+    icon: "⚖️",
+  },
+  {
+    title: "刑事辯護",
+    description: "提供完整的刑事辯護服務，從偵查階段到審判程序，全程陪伴保障被告權利。",
+    icon: "🛡️",
+  },
+  {
+    title: "企業法務",
+    description: "為企業提供法律顧問服務，涵蓋公司設立、契約審閱、勞資關係及合規諮詢。",
+    icon: "🏢",
+  },
+  {
+    title: "智慧財產權",
+    description: "專注商標、專利、著作權之申請、維護及侵權訴訟，保護創新成果。",
+    icon: "💡",
+  },
+  {
+    title: "不動產法律",
+    description: "處理不動產交易、租賃糾紛、都市更新及營建法規等相關法律事務。",
+    icon: "🏠",
+  },
+  {
+    title: "家事法律",
+    description: "提供離婚、監護權、繼承、扶養等家事案件的專業法律服務與調解協助。",
+    icon: "👨‍👩‍👧‍👦",
+  },
+];
+---
+
+<section>
+  <Wrapper variant="standard" class="py-24">
+    <div class="max-w-xl overflow-hidden">
+      <Text
+        tag="h2"
+        variant="textXL"
+        data-aos="fade-up"
+        data-aos-duration="1000"
+        class="dark:text-white text-base-900 text-balance"
+      >
+        專業領域
+      </Text>
+      <Text
+        tag="p"
+        variant="textBase"
+        data-aos="fade-up"
+        data-aos-duration="1200"
+        class="mt-2 text-base-500 dark:text-base-300"
+      >
+        翰霖法律事務所提供全方位的法律服務，涵蓋以下核心領域
+      </Text>
+    </div>
+    <div
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-1 pt-4 relative before:absolute after:absolute before:bg-black after:bg-base-200 dark:before:bg-base-50 dark:after:bg-base-50/10 before:top-0 before:left-0 before:h-px before:w-18 after:top-0 after:right-0 after:left-20 after:h-px"
+    >
+      {
+        areas.map((area, index) => (
+          <a
+            href="/practice-areas"
+            class="flex flex-col gap-2 relative overflow-hidden pb-8 group"
+            data-aos="fade-up"
+            data-aos-duration={1000 + index * 200}
+          >
+            <span class="text-3xl">{area.icon}</span>
+            <Text
+              tag="h3"
+              variant="textBase"
+              class="dark:text-white text-base-900 font-medium group-hover:text-accent-500 dark:group-hover:text-accent-300 duration-300"
+            >
+              {area.title}
+            </Text>
+            <Text
+              tag="p"
+              variant="textSM"
+              class="dark:text-base-400 text-base-500 text-balance"
+            >
+              {area.description}
+            </Text>
+          </a>
+        ))
+      }
+    </div>
+  </Wrapper>
+</section>

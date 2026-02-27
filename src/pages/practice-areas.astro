@@ -1,0 +1,110 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Text from "@/components/fundations/elements/Text.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+
+const areas = [
+  {
+    title: "民事訴訟",
+    description: "處理各類民事糾紛，包括債務糾紛、損害賠償、契約爭議、侵權行為等。我們深入了解案情，精準分析法律關係，為當事人研擬最有效的訴訟策略。",
+    details: ["債務糾紛與強制執行", "損害賠償請求", "契約履行與解除", "侵權行為損害賠償", "消費者保護訴訟"],
+  },
+  {
+    title: "刑事辯護",
+    description: "從偵查階段到審判程序，提供完整的刑事辯護服務。我們堅持保障被告的法律權益，以嚴謹的法律分析與有效的辯護策略，為當事人爭取最佳結果。",
+    details: ["偵查階段陪同訊問", "交保與羈押抗告", "刑事審判辯護", "上訴與非常上訴", "刑事附帶民事求償"],
+  },
+  {
+    title: "企業法務",
+    description: "為各規模企業提供全方位法務顧問服務，協助企業在合法合規的框架下健全運營，預防法律風險。",
+    details: ["公司設立與組織變更", "商業契約擬定與審閱", "勞資關係與勞動法規", "企業併購與投資", "法規遵循與內控"],
+  },
+  {
+    title: "智慧財產權",
+    description: "保護您的創新成果與品牌價值。從智財權的申請、維護到侵權訴訟，提供完整的法律服務。",
+    details: ["商標申請與維護", "專利佈局與爭議", "著作權保護", "營業秘密保護", "智財侵權訴訟"],
+  },
+  {
+    title: "不動產法律",
+    description: "處理各類不動產法律事務，從交易規劃到爭議解決，提供專業的法律建議與代理服務。",
+    details: ["不動產買賣與交易", "租賃契約與糾紛", "都市更新法律服務", "營建法規諮詢", "土地開發與分割"],
+  },
+  {
+    title: "家事法律",
+    description: "以同理心與專業素養處理家事案件，在維護當事人權益的同時，力求以和平理性的方式解決糾紛。",
+    details: ["離婚訴訟與協議", "監護權與探視權", "扶養費請求", "遺產繼承與分割", "收養與親子關係"],
+  },
+];
+---
+
+<BaseLayout>
+  <section>
+    <Wrapper variant="standard" class="pt-8 pb-12">
+      <div class="max-w-xl overflow-hidden">
+        <Text
+          tag="h1"
+          variant="textXL"
+          data-aos="fade-up"
+          data-aos-duration="1000"
+          class="dark:text-white text-base-900 text-balance"
+        >
+          專業領域
+        </Text>
+      </div>
+      <Text
+        tag="p"
+        variant="textBase"
+        data-aos="fade-up"
+        data-aos-duration="1200"
+        class="mt-2 text-base-500 dark:text-base-300 max-w-lg"
+      >
+        翰霖法律事務所涵蓋六大核心法律服務領域，以深厚的專業知識為您提供全方位的法律解決方案。
+      </Text>
+    </Wrapper>
+  </section>
+
+  <section>
+    <Wrapper class="pb-24">
+      <div class="space-y-12">
+        {
+          areas.map((area, index) => (
+            <div
+              class="grid grid-cols-1 lg:grid-cols-3 gap-8 pt-4 relative before:absolute after:absolute before:bg-black after:bg-base-200 dark:before:bg-base-50 dark:after:bg-base-50/10 before:top-0 before:left-0 before:h-px before:w-18 after:top-0 after:right-0 after:left-20 after:h-px"
+              data-aos="fade-up"
+              data-aos-duration={1000 + index * 100}
+            >
+              <div>
+                <Text
+                  tag="h2"
+                  variant="textLG"
+                  class="dark:text-white text-base-900 font-medium"
+                >
+                  {area.title}
+                </Text>
+              </div>
+              <div>
+                <Text
+                  tag="p"
+                  variant="textSM"
+                  class="text-base-500 dark:text-base-400"
+                >
+                  {area.description}
+                </Text>
+              </div>
+              <div>
+                <ul class="space-y-1">
+                  {area.details.map((detail) => (
+                    <li class="text-sm text-base-500 dark:text-base-400 flex items-center gap-2">
+                      <span class="w-1 h-1 bg-accent-500 dark:bg-accent-400 rounded-full shrink-0" />
+                      {detail}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </Wrapper>
+  </section>
+</BaseLayout>

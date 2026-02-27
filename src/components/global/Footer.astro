@@ -1,0 +1,140 @@
+---
+import Text from "@/components/fundations/elements/Text.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+const navigationItems = [
+  {
+    title: "服務",
+    items: [
+      { href: "/philosophy", text: "服務理念" },
+      { href: "/practice-areas", text: "專業領域" },
+      { href: "/process", text: "服務流程" },
+      { href: "/cases", text: "實務案例" },
+    ],
+  },
+  {
+    title: "關於",
+    items: [
+      { href: "/lawyers", text: "律師介紹" },
+      { href: "/contact", text: "聯絡我們" },
+    ],
+  },
+];
+---
+
+<footer>
+  <Wrapper variant="standard" class="py-8">
+    <div
+      class="relative before:absolute after:absolute before:bg-black after:bg-base-200 dark:before:bg-base-50 dark:after:bg-base-50/10 before:top-0 before:left-0 before:h-px before:w-18 after:top-0 after:right-0 after:left-20 after:h-px"
+    >
+      <div class="grid grid-cols-2 md:grid-cols-3 pt-2">
+        {
+          navigationItems.map((section) => (
+            <div class="flex flex-col gap-1">
+              <Text
+                tag="h3"
+                variant="textSM"
+                class="font-medium uppercase text-base-900 dark:text-white"
+              >
+                {section.title}
+              </Text>
+              <div class="mt-2 flex flex-col gap-1">
+                {section.items.map((item) => (
+                  <a
+                    href={item.href}
+                    class="hover:translate-x-1.5 text-sm text-base-500 hover:text-accent-500 dark:hover:text-accent-300 dark:text-base-50 duration-500"
+                  >
+                    {item.text}
+                  </a>
+                ))}
+              </div>
+            </div>
+          ))
+        }
+        <div class="flex flex-col gap-1">
+          <Text
+            tag="h3"
+            variant="textSM"
+            class="font-medium uppercase text-base-900 dark:text-white"
+          >
+            聯絡方式
+          </Text>
+          <div class="mt-2 flex flex-col gap-1">
+            <a
+              href="tel:02-25852626"
+              class="hover:translate-x-1.5 text-sm text-base-500 hover:text-accent-500 dark:hover:text-accent-300 dark:text-base-50 duration-500"
+            >
+              TEL: 02-2585-2626
+            </a>
+            <span class="text-sm text-base-500 dark:text-base-50">
+              FAX: 02-2596-3737
+            </span>
+            <span class="text-sm text-base-400 dark:text-base-500">
+              台北市中正區重慶南路一段99號11樓之9
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-4 pb-12 pt-2 relative before:absolute after:absolute before:bg-black after:bg-base-200 dark:before:bg-base-50 dark:after:bg-base-50/10 before:top-0 before:left-0 before:h-px before:w-18 after:top-0 after:right-0 after:left-20 after:h-px"
+      >
+        <div class="flex flex-col gap-1">
+          <Text
+            tag="h3"
+            variant="textSM"
+            class="font-medium uppercase text-base-900 dark:text-white"
+          >
+            翰霖法律事務所
+          </Text>
+          <span class="text-sm text-base-500 dark:text-base-400">
+            專業、誠信、守護您的權益
+          </span>
+        </div>
+        <div class="text-right">
+          <Text
+            tag="p"
+            variant="display3XL"
+            class="text-base-500 dark:text-base-400 lg:ml-auto"
+          >
+            <span id="clock"> </span>
+          </Text>
+          <Text
+            tag="span"
+            variant="textSM"
+            class="text-base-500 dark:text-base-400 mt-1"
+          >
+            台北，台灣
+          </Text>
+        </div>
+      </div>
+      <div
+        class="relative before:absolute after:absolute before:bg-black after:bg-base-200 dark:before:bg-base-50 dark:after:bg-base-50/10 before:top-0 before:left-0 before:h-px before:w-18 after:top-0 after:right-0 after:left-20 after:h-px"
+      >
+        <Text
+          tag="p"
+          variant="textSM"
+          class="text-base-500 dark:text-base-400 pt-2"
+        >
+          © <span id="year"></span> 翰霖法律事務所 版權所有
+        </Text>
+      </div>
+    </div>
+  </Wrapper>
+</footer>
+<script type="module">
+  function updateClock() {
+    const timeString = new Date().toLocaleTimeString("zh-TW", {
+      timeZone: "Asia/Taipei",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+    });
+    document.getElementById("clock").textContent = timeString;
+  }
+  function updateYear() {
+    const currentYear = new Date().getFullYear();
+    document.getElementById("year").textContent = currentYear;
+  }
+  setInterval(updateClock, 1000);
+  updateClock();
+  updateYear();
+</script>

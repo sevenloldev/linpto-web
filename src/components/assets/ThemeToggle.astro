@@ -1,0 +1,46 @@
+---
+import Button from "@/components/fundations/elements/Button.astro";
+import Toggle from "@/components/fundations/icons/Toggle.astro";
+const { class: className = "", ...rest } = Astro.props;
+---
+
+<Button
+  iconOnly
+  size="sm"
+  variant="muted"
+  class={className}
+  {...rest}
+  role="switch"
+  aria-checked="false"
+  data-theme-toggle
+>
+  <Toggle slot="icon" size="base" />
+</Button>
+
+<script>
+  function updateTheme(isDark) {
+    document.documentElement.classList.toggle("dark", isDark);
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+    document.querySelectorAll("[data-theme-toggle]").forEach((button) => {
+      button.setAttribute("aria-checked", isDark ? "true" : "false");
+    });
+  }
+
+  function initializeTheme() {
+    const savedTheme = localStorage.getItem("theme");
+    const systemPrefersDark = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    ).matches;
+    const isDark = savedTheme ? savedTheme === "dark" : systemPrefersDark;
+    updateTheme(isDark);
+  }
+
+  initializeTheme();
+
+  document.querySelectorAll("[data-theme-toggle]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const isDark = document.documentElement.classList.contains("dark");
+      updateTheme(!isDark);
+    });
+  });
+</script>

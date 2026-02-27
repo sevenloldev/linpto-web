@@ -1,0 +1,23 @@
+---
+const { class: className = "", ...rest } = Astro.props;
+---
+
+<svg
+  class={className}
+  {...rest}
+  viewBox="0 0 200 60"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <text
+    x="0"
+    y="45"
+    font-family="serif"
+    font-size="42"
+    font-weight="700"
+    fill="currentColor"
+    letter-spacing="4"
+  >
+    翰霖
+  </text>
+</svg>

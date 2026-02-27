@@ -1,0 +1,74 @@
+---
+import Text from "@/components/fundations/elements/Text.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+
+const steps = [
+  {
+    aosDuration: "2000",
+    title: "初步諮詢",
+    description:
+      "透過電話或面談，了解您的法律需求與案件概況。我們提供免費初步諮詢，讓您在無壓力的環境下說明情況。",
+  },
+  {
+    aosDuration: "2500",
+    title: "案件評估",
+    description:
+      "深入分析案件事實與法律依據，評估各種可行方案的風險與效益，為您制定最適切的法律策略。",
+  },
+  {
+    aosDuration: "3000",
+    title: "策略執行",
+    description:
+      "依據擬定之策略積極執行，全程保持與當事人密切溝通，確保案件進展順利並達成最佳結果。",
+  },
+];
+---
+
+<section>
+  <Wrapper variant="standard" class="pt-24 pb-12">
+    <div class="max-w-xl overflow-hidden">
+      <Text
+        tag="h2"
+        variant="textXL"
+        data-aos="fade-up"
+        data-aos-duration="1000"
+        class="dark:text-white text-base-900 text-balance"
+      >
+        我們以嚴謹的流程，確保每位當事人都能獲得最高品質的法律服務。
+      </Text>
+    </div>
+    <div
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-1 pt-4 relative before:absolute after:absolute before:bg-black after:bg-base-200 dark:before:bg-base-50 dark:after:bg-base-50/10 before:top-0 before:left-0 before:h-px before:w-18 after:top-0 after:right-0 after:left-20 after:h-px"
+    >
+      {
+        steps.map((step, index) => (
+          <div class="flex gap-2 relative overflow-hidden pb-12">
+            <span
+              class="text-9xl font-semibold right-0 text-base-100 dark:text-base-800 lg:text-15xl absolute"
+              data-aos="fade-left"
+              data-aos-duration={step.aosDuration}
+            >
+              {index + 1}
+            </span>
+            <div class="relative">
+              <Text
+                tag="h3"
+                variant="textBase"
+                class="dark:text-white text-base-900 font-medium"
+              >
+                {step.title}
+              </Text>
+              <Text
+                tag="p"
+                variant="textSM"
+                class="dark:text-base-400 mt-4 text-base-500 text-balance lg:text-balance"
+              >
+                {step.description}
+              </Text>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </Wrapper>
+</section>

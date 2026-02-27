@@ -1,0 +1,109 @@
+---
+import { Image } from "astro:assets";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Text from "@/components/fundations/elements/Text.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const lawyers = await getCollection("lawyers");
+  return lawyers.map((lawyer) => ({
+    params: { slug: lawyer.slug },
+    props: { lawyer },
+  }));
+}
+
+const { lawyer } = Astro.props;
+const { name, title, education, specialties, experience, bio, image } = lawyer.data;
+const { Content } = await lawyer.render();
+---
+
+<BaseLayout>
+  <section>
+    <Wrapper variant="standard" class="pt-8 pb-12">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div>
+          <Image
+            src={image.url}
+            alt={image.alt}
+            width={400}
+            height={500}
+            class="w-full aspect-4/5 object-cover object-center"
+          />
+        </div>
+        <div class="lg:col-span-2">
+          <div class="overflow-hidden">
+            <Text
+              tag="h1"
+              variant="textXL"
+              data-aos="fade-up"
+              data-aos-duration="1000"
+              class="dark:text-white text-base-900"
+            >
+              {name}
+            </Text>
+          </div>
+          <Text
+            tag="p"
+            variant="textBase"
+            class="text-accent-500 dark:text-accent-300 mt-1"
+          >
+            {title}
+          </Text>
+          <Text
+            tag="p"
+            variant="textBase"
+            class="mt-4 text-base-500 dark:text-base-300"
+          >
+            {bio}
+          </Text>
+
+          {specialties && specialties.length > 0 && (
+            <div class="mt-8">
+              <Text tag="h3" variant="textBase" class="dark:text-white text-base-900 font-medium">
+                專長領域
+              </Text>
+              <div class="flex flex-wrap gap-2 mt-2">
+                {specialties.map((s: string) => (
+                  <span class="text-sm px-3 py-1 bg-base-100 dark:bg-base-800 text-base-600 dark:text-base-300 rounded">
+                    {s}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {education && education.length > 0 && (
+            <div class="mt-8">
+              <Text tag="h3" variant="textBase" class="dark:text-white text-base-900 font-medium">
+                學歷
+              </Text>
+              <ul class="mt-2 space-y-1">
+                {education.map((e: string) => (
+                  <li class="text-sm text-base-500 dark:text-base-400">{e}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {experience && experience.length > 0 && (
+            <div class="mt-8">
+              <Text tag="h3" variant="textBase" class="dark:text-white text-base-900 font-medium">
+                經歷
+              </Text>
+              <ul class="mt-2 space-y-1">
+                {experience.map((e: string) => (
+                  <li class="text-sm text-base-500 dark:text-base-400">{e}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          <div class="mt-8 prose prose-sm dark:prose-invert max-w-none">
+            <Content />
+          </div>
+        </div>
+      </div>
+    </Wrapper>
+  </section>
+</BaseLayout>

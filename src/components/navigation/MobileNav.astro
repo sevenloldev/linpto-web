@@ -1,0 +1,65 @@
+---
+import Logo from "@/components/assets/Logo.astro";
+import ThemeToggle from "@/components/assets/ThemeToggle.astro";
+import NavigationLinks from "@/components/navigation/NavigationLinks.astro";
+---
+
+<div class="sticky top-0 z-40 flex items-center gap-x-6 px-4 py-4 shadow-sm sm:px-6 lg:hidden bg-white dark:bg-base-950">
+  <button
+    type="button"
+    id="mobileMenuButton"
+    class="-m-2.5 p-2.5 text-base-700 dark:text-base-200 lg:hidden"
+    aria-label="開啟選單"
+  >
+    <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+    </svg>
+  </button>
+  <a href="/" class="flex-1" aria-label="回到首頁">
+    <Logo class="w-20 h-auto text-base-900 dark:text-white" />
+  </a>
+  <ThemeToggle />
+</div>
+
+<div
+  id="mobileMenu"
+  class="fixed inset-0 z-50 hidden lg:hidden"
+>
+  <div class="fixed inset-0 bg-base-900/50 dark:bg-black/60" id="mobileMenuBackdrop"></div>
+  <div class="fixed inset-y-0 left-0 w-full max-w-xs bg-white dark:bg-base-950 p-6 overflow-y-auto">
+    <div class="flex items-center justify-between">
+      <a href="/" aria-label="回到首頁">
+        <Logo class="w-20 h-auto text-base-900 dark:text-white" />
+      </a>
+      <button
+        type="button"
+        id="mobileMenuClose"
+        class="-m-2.5 p-2.5 text-base-700 dark:text-base-200"
+        aria-label="關閉選單"
+      >
+        <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+    <NavigationLinks class="mt-8" />
+  </div>
+</div>
+
+<script type="module">
+  const menuButton = document.getElementById("mobileMenuButton");
+  const menu = document.getElementById("mobileMenu");
+  const menuClose = document.getElementById("mobileMenuClose");
+  const menuBackdrop = document.getElementById("mobileMenuBackdrop");
+
+  function openMenu() {
+    menu.classList.remove("hidden");
+  }
+  function closeMenu() {
+    menu.classList.add("hidden");
+  }
+
+  menuButton?.addEventListener("click", openMenu);
+  menuClose?.addEventListener("click", closeMenu);
+  menuBackdrop?.addEventListener("click", closeMenu);
+</script>

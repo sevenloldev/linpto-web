@@ -1,0 +1,114 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Text from "@/components/fundations/elements/Text.astro";
+import Button from "@/components/fundations/elements/Button.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+
+const steps = [
+  {
+    number: "01",
+    title: "初步諮詢",
+    description: "來電或親臨本所，由專業律師為您進行免費初步法律諮詢。我們會耐心傾聽您的問題，初步了解案件概況。",
+    details: "可透過電話（02-2585-2626）、電子郵件或親臨本所進行諮詢。",
+  },
+  {
+    number: "02",
+    title: "案件評估",
+    description: "深入分析案件事實、蒐集相關證據資料，評估法律風險與各種可行方案的利弊得失。",
+    details: "本階段將提供書面案件分析報告及建議方案。",
+  },
+  {
+    number: "03",
+    title: "策略擬定",
+    description: "根據案件評估結果，與當事人充分討論後，制定最適切的法律策略與行動計畫。",
+    details: "包含訴訟策略、談判方向、時程規劃及費用說明。",
+  },
+  {
+    number: "04",
+    title: "案件執行",
+    description: "依據擬定之策略積極執行，全程保持與當事人密切溝通，定期報告案件進展，確保達成最佳結果。",
+    details: "提供即時案件進度追蹤與結果報告。",
+  },
+];
+---
+
+<BaseLayout>
+  <section>
+    <Wrapper variant="standard" class="pt-8 pb-12">
+      <div class="max-w-xl overflow-hidden">
+        <Text
+          tag="h1"
+          variant="textXL"
+          data-aos="fade-up"
+          data-aos-duration="1000"
+          class="dark:text-white text-base-900 text-balance"
+        >
+          服務流程
+        </Text>
+      </div>
+      <Text
+        tag="p"
+        variant="textBase"
+        data-aos="fade-up"
+        data-aos-duration="1200"
+        class="mt-2 text-base-500 dark:text-base-300 max-w-lg"
+      >
+        翰霖法律事務所以標準化的服務流程，確保每位當事人都能獲得一致且高品質的法律服務體驗。
+      </Text>
+    </Wrapper>
+  </section>
+
+  <section>
+    <Wrapper class="pb-24">
+      <div class="space-y-0">
+        {
+          steps.map((step, index) => (
+            <div
+              class="grid grid-cols-1 lg:grid-cols-4 gap-8 py-8 relative before:absolute after:absolute before:bg-black after:bg-base-200 dark:before:bg-base-50 dark:after:bg-base-50/10 before:top-0 before:left-0 before:h-px before:w-18 after:top-0 after:right-0 after:left-20 after:h-px"
+              data-aos="fade-up"
+              data-aos-duration={1000 + index * 200}
+            >
+              <div>
+                <span class="text-6xl font-semibold text-base-100 dark:text-base-800">
+                  {step.number}
+                </span>
+              </div>
+              <div>
+                <Text
+                  tag="h2"
+                  variant="textLG"
+                  class="dark:text-white text-base-900 font-medium"
+                >
+                  {step.title}
+                </Text>
+              </div>
+              <div>
+                <Text
+                  tag="p"
+                  variant="textSM"
+                  class="text-base-500 dark:text-base-400"
+                >
+                  {step.description}
+                </Text>
+              </div>
+              <div>
+                <Text
+                  tag="p"
+                  variant="textXS"
+                  class="text-base-400 dark:text-base-500 italic"
+                >
+                  {step.details}
+                </Text>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+      <div class="mt-12 text-center">
+        <Button isLink size="base" variant="default" href="/contact">
+          立即諮詢
+        </Button>
+      </div>
+    </Wrapper>
+  </section>
+</BaseLayout>

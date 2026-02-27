@@ -1,0 +1,113 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Text from "@/components/fundations/elements/Text.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+---
+
+<BaseLayout>
+  <section>
+    <Wrapper variant="standard" class="pt-8 pb-24">
+      <div class="max-w-xl">
+        <div class="overflow-hidden">
+          <Text
+            tag="h1"
+            variant="textXL"
+            data-aos="fade-up"
+            data-aos-duration="1000"
+            class="dark:text-white text-base-900"
+          >
+            聯絡我們
+          </Text>
+        </div>
+        <div class="overflow-hidden">
+          <Text
+            tag="p"
+            variant="textBase"
+            data-aos="fade-up"
+            data-aos-duration="1200"
+            class="mt-2 text-base-500 dark:text-base-300"
+          >
+            歡迎透過以下方式聯繫翰霖法律事務所，我們將盡速為您提供專業法律服務。
+          </Text>
+        </div>
+
+        <div class="mt-8 space-y-6">
+          <div class="p-6 bg-base-50 dark:bg-base-900">
+            <Text tag="h3" variant="textBase" class="dark:text-white text-base-900 font-medium">
+              電話
+            </Text>
+            <a
+              href="tel:02-25852626"
+              class="mt-2 text-lg text-accent-500 dark:text-accent-300 hover:text-accent-600 dark:hover:text-accent-200 duration-300 block"
+            >
+              02-2585-2626
+            </a>
+          </div>
+
+          <div class="p-6 bg-base-50 dark:bg-base-900">
+            <Text tag="h3" variant="textBase" class="dark:text-white text-base-900 font-medium">
+              傳真
+            </Text>
+            <Text tag="p" variant="textBase" class="mt-2 text-base-500 dark:text-base-400">
+              02-2596-3737
+            </Text>
+          </div>
+
+          <div class="p-6 bg-base-50 dark:bg-base-900">
+            <Text tag="h3" variant="textBase" class="dark:text-white text-base-900 font-medium">
+              事務所地址
+            </Text>
+            <Text tag="p" variant="textBase" class="mt-2 text-base-500 dark:text-base-400">
+              台北市中正區重慶南路一段99號11樓之9
+            </Text>
+            <Text tag="p" variant="textSM" class="mt-1 text-base-400 dark:text-base-500">
+              近捷運台大醫院站
+            </Text>
+          </div>
+
+          <div class="p-6 bg-base-50 dark:bg-base-900">
+            <Text tag="h3" variant="textBase" class="dark:text-white text-base-900 font-medium">
+              營業時間
+            </Text>
+            <div class="mt-2 space-y-1">
+              <div class="flex justify-between">
+                <Text tag="span" variant="textSM" class="text-base-500 dark:text-base-400">
+                  週一至週五
+                </Text>
+                <Text tag="span" variant="textSM" class="text-base-700 dark:text-base-300">
+                  09:00 – 18:00
+                </Text>
+              </div>
+              <div class="flex justify-between">
+                <Text tag="span" variant="textSM" class="text-base-500 dark:text-base-400">
+                  週六
+                </Text>
+                <Text tag="span" variant="textSM" class="text-base-700 dark:text-base-300">
+                  預約制
+                </Text>
+              </div>
+              <div class="flex justify-between">
+                <Text tag="span" variant="textSM" class="text-base-500 dark:text-base-400">
+                  週日及國定假日
+                </Text>
+                <Text tag="span" variant="textSM" class="text-base-700 dark:text-base-300">
+                  休息
+                </Text>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-6 bg-accent-50 dark:bg-accent-950">
+            <Text tag="h3" variant="textBase" class="dark:text-white text-base-900 font-medium">
+              免費初步諮詢
+            </Text>
+            <Text tag="p" variant="textSM" class="mt-2 text-base-500 dark:text-base-400">
+              翰霖法律事務所提供免費初步電話諮詢服務。如需進一步面談，
+              歡迎來電預約，我們將安排專業律師為您服務。
+            </Text>
+          </div>
+        </div>
+      </div>
+    </Wrapper>
+  </section>
+</BaseLayout>
