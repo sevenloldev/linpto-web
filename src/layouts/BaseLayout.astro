@@ -5,11 +5,18 @@ import Footer from "@/components/global/Footer.astro";
 import DesktopNav from "@/components/navigation/DesktopNav.astro";
 import MobileNav from "@/components/navigation/MobileNav.astro";
 import ToggleLocalStorage from "@/components/fundations/scripts/ToggleLocalStorage.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
 ---
 
 <html lang="zh-Hant" class="scroll-smooth">
   <head>
-    <BaseHead />
+    <BaseHead title={title} description={description} />
   </head>
   <body class="dark:bg-base-950 bg-white">
     <div class="min-h-[640px] flex flex-col">

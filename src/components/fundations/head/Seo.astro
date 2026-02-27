@@ -1,64 +1,44 @@
 ---
 import { AstroSeo } from "@astrolib/seo";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const SITE_NAME = "翰霖法律事務所";
+const SITE_URL = "https://linpto.com.tw";
+const DEFAULT_DESCRIPTION =
+  "翰霖法律事務所｜台北專業律師團隊，提供民事訴訟、刑事辯護、企業法務、智慧財產權、不動產法律、家事法律等全方位法律服務。";
+
+const { title, description = DEFAULT_DESCRIPTION } = Astro.props;
+
+const pageTitle = title ? `${title} | ${SITE_NAME}` : SITE_NAME;
+const canonicalUrl = new URL(Astro.url.pathname, SITE_URL).href;
 ---
 
 <AstroSeo
-  title="翰霖法律事務所 (Dev)"
-  description="A detailed description of your page content."
-  canonical="https://yoursite.com/current-page"
+  title={pageTitle}
+  description={description}
+  canonical={canonicalUrl}
   openGraph={{
-    url: "https://yoursite.com/current-page",
-    title: "翰霖法律事務所",
-    description: "A detailed description of your page content.",
+    url: canonicalUrl,
+    title: pageTitle,
+    description: description,
     images: [
       {
-        url: "https://yoursite.com/og-image.jpg",
+        url: `${SITE_URL}/og-image.jpg`,
         width: 1200,
         height: 630,
-        alt: "Open Graph Image Alt",
+        alt: "翰霖法律事務所",
         type: "image/jpeg",
       },
     ],
-    site_name: "Your Site Name",
+    site_name: SITE_NAME,
     type: "website",
-    locale: "en_US",
-  }}
-  twitter={{
-    handle: "@yourhandle",
-    site: "@yoursite",
-    cardType: "summary_large_image",
+    locale: "zh_TW",
   }}
 />
 
-<!-- Open Graph / Facebook -->
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://www.yourwebsite.com/" />
-<meta property="og:title" content="Your Website Title" />
-<meta
-  property="og:description"
-  content="A brief description of your website content."
-/>
-<meta
-  property="og:image"
-  content="https://www.yourwebsite.com/path/to/image.jpg"
-/>
-
-<!-- Twitter -->
-<meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content="https://www.yourwebsite.com/" />
-<meta property="twitter:title" content="Your Website Title" />
-<meta
-  property="twitter:description"
-  content="A brief description of your website content."
-/>
-<meta
-  property="twitter:image"
-  content="https://www.yourwebsite.com/path/to/image.jpg"
-/>
-
-<!-- Canonical URL -->
-<link rel="canonical" href="https://www.yourwebsite.com/" />
-
-<!-- Additional SEO -->
 <meta name="robots" content="index, follow" />
 <meta name="googlebot" content="index, follow" />

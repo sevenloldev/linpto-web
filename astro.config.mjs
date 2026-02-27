@@ -12,6 +12,6 @@ export default defineConfig({
             theme: "css-variables",
         },
     },
-    site: "https://hanlin-law.com",
+    site: "https://linpto.com.tw",
     integrations: [sitemap()],
 });

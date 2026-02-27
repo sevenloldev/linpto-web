@@ -1,16 +1,24 @@
-<!-- Meta Tags -->
+---
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const SITE_NAME = "翰霖法律事務所";
+const DEFAULT_DESCRIPTION =
+  "翰霖法律事務所｜台北專業律師團隊，提供民事訴訟、刑事辯護、企業法務、智慧財產權、不動產法律、家事法律等全方位法律服務。";
+
+const { title, description = DEFAULT_DESCRIPTION } = Astro.props;
+const pageTitle = title ? `${title} | ${SITE_NAME}` : SITE_NAME;
+---
+
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>翰霖法律事務所 (Dev)</title>
+<title>{pageTitle}</title>
+<meta name="description" content={description} />
 <meta
-  name="description"
-  content="A brief description of your website content."
+  name="keywords"
+  content="翰霖法律事務所, 台北律師, 民事訴訟, 刑事辯護, 企業法務, 智慧財產權, 不動產法律, 家事法律, 法律諮詢"
 />
-<meta name="keywords" content="keyword1, keyword2, keyword3" />
-<meta name="author" content="Your Name or Company Name" />
-
-<!-- Theme Color for Mobile Browsers -->
-<meta name="theme-color" content="#ffffff" />
-
-<!-- For IE -->
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="author" content="翰霖法律事務所" />
+<meta name="theme-color" content="#0c1d3a" />

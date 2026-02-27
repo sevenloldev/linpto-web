@@ -18,7 +18,7 @@ const { name, title, education, specialties, experience, bio, image } = lawyer.d
 const { Content } = await lawyer.render();
 ---
 
-<BaseLayout>
+<BaseLayout title={`${lawyer.data.name} - ${lawyer.data.title}`} description={lawyer.data.bio}>
   <section>
     <Wrapper variant="standard" class="pt-8 pb-12">
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">

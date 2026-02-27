@@ -29,20 +29,23 @@ describe("Navigation links", () => {
 });
 
 describe("SEO metadata", () => {
-    it("Meta.astro has correct page title", () => {
+    it("Meta.astro uses dynamic title with firm name default", () => {
         const content = readFileSync(
             resolve(srcDir, "components/fundations/head/Meta.astro"),
             "utf-8"
         );
-        expect(content).toMatch(/<title>翰霖法律事務所/);
+        expect(content).toContain("翰霖法律事務所");
+        expect(content).toContain("pageTitle");
     });
 
-    it("Seo.astro has correct page title", () => {
+    it("Seo.astro has firm name and linpto.com.tw domain", () => {
         const content = readFileSync(
             resolve(srcDir, "components/fundations/head/Seo.astro"),
             "utf-8"
         );
         expect(content).toContain("翰霖法律事務所");
+        expect(content).toContain("linpto.com.tw");
+        expect(content).toContain("zh_TW");
     });
 });
 

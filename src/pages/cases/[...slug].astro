@@ -22,7 +22,7 @@ const formattedDate = new Date(date).toLocaleDateString("zh-TW", {
 });
 ---
 
-<BaseLayout>
+<BaseLayout title={caseStudy.data.title} description={caseStudy.data.summary}>
   <section>
     <Wrapper variant="standard" class="pt-8 pb-12">
       <div class="max-w-2xl">

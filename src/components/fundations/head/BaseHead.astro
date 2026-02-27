@@ -3,16 +3,20 @@ import Seo from "@/components/fundations/head/Seo.astro";
 import Meta from "@/components/fundations/head/Meta.astro";
 import Fonts from "@/components/fundations/head/Fonts.astro";
 import Favicons from "@/components/fundations/head/Favicons.astro";
-// Scripts
 import AOS from "@/components/fundations/scripts/AOS.astro";
 import FuseJs from "@/components/fundations/scripts/FuseJs.astro";
 
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
 ---
-<Seo />
-<Meta />
+
+<Meta title={title} description={description} />
+<Seo title={title} description={description} />
 <Fonts />
 <Favicons />
-<!-- Scripts -->
 <AOS />
 <FuseJs />
-

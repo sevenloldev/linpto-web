@@ -9,7 +9,7 @@ const allLawyers = await getCollection("lawyers");
 allLawyers.sort((a, b) => a.data.order - b.data.order);
 ---
 
-<BaseLayout>
+<BaseLayout title="律師介紹" description="認識翰霖法律事務所專業律師團隊，每位律師均具備深厚的法學素養與豐富的實務經驗。">
   <section>
     <Wrapper variant="standard" class="pt-8 pb-12">
       <div class="max-w-xl overflow-hidden">
