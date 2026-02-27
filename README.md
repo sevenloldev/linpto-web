@@ -19,7 +19,11 @@ linpto-web/
 ├── astro.config.mjs          # Astro 設定
 ├── package.json               # 專案設定與依賴
 ├── tsconfig.json              # TypeScript 設定
+├── wrangler.toml              # Cloudflare Workers 設定
 ├── .pages.yml                 # PagesCMS 設定
+├── scripts/
+│   ├── create-rc.sh           # 建立發布候選
+│   └── release.sh             # 發布至正式環境
 ├── src/
 │   ├── components/
 │   │   ├── assets/            # Logo, ThemeToggle
@@ -80,41 +84,60 @@ npm run build
 npm run preview
 ```
 
-## 部署至 Cloudflare Pages
+## 分支策略與部署
 
-### 初次設定
+### 分支說明
 
-1. 將專案推送至 GitHub：
-   ```bash
-   git init
-   git add .
-   git commit -m "Initial commit"
-   git remote add origin <your-github-repo>
-   git push -u origin main
-   ```
+| 分支 | 用途 | 部署環境 |
+|------|------|----------|
+| `dev` | 日常開發 | Dev（頁面標題帶 `(Dev)` 標記） |
+| `preprod` | 預發布候選 | Staging / QA 驗證 |
+| `main` | 正式版本 | Production |
 
-2. 登入 [Cloudflare Dashboard](https://dash.cloudflare.com/) → Pages
+### 部署至 Cloudflare Workers
 
-3. 建立新專案，連結 GitHub 倉庫
+本專案使用 Cloudflare Workers + Static Assets 部署。
 
-4. 建置設定：
-   - **Build command**: `npm run build`
-   - **Build output directory**: `dist`
-   - **Node.js version**: 18+
+**建置設定：**
+- **Build command**: `npm run build`
+- **Deploy command**: `npx wrangler deploy`
+- **配置檔**: `wrangler.toml`
 
-### Staging 環境
+### 發布流程
 
-- 所有非 `main` 分支的推送自動部署至 staging
-- Staging URL: `<branch>.<project>.pages.dev`
+```
+dev → (create-rc) → preprod + tag → (release) → main
+```
 
-### Production 環境
+#### 1. 建立發布候選 (Release Candidate)
 
-- 推送至 `main` 分支自動部署至 production
-- Production URL: `<project>.pages.dev` 或自訂域名
+將 `dev` HEAD 合併至 `preprod` 分支並建立版本標籤：
+
+```bash
+./scripts/create-rc.sh <version>
+
+# 範例
+./scripts/create-rc.sh 0.2.0
+# → 建立 preprod 分支（from dev HEAD）
+# → 建立 v0.2.0 標籤
+```
+
+#### 2. 發布至正式環境 (Production Release)
+
+將指定標籤的候選版本合併至 `main`：
+
+```bash
+./scripts/release.sh <tag>
+
+# 範例
+./scripts/release.sh v0.2.0
+# → 將 v0.2.0 合併至 main
+# → Cloudflare 自動部署
+```
 
 ### 自訂域名
 
-在 Cloudflare Pages 專案設定中新增自訂域名，並設定 DNS CNAME 紀錄。
+在 Cloudflare Workers 專案設定中新增自訂域名。
 
 ## 內容管理 (PagesCMS)
 
