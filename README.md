@@ -84,6 +84,28 @@ npm run build
 npm run preview
 ```
 
+## 測試
+
+使用 [Vitest](https://vitest.dev/) 進行單元測試。
+
+```bash
+# 執行所有測試
+npm test
+
+# 監聽模式（開發時自動重跑）
+npm run test:watch
+```
+
+### 測試內容
+
+| 測試檔案 | 內容 |
+|----------|------|
+| `tests/content-schema.test.ts` | Zod Schema 驗證（律師/案例必填欄位、預設值、無效資料） |
+| `tests/content-files.test.ts` | Markdown 檔案 frontmatter 完整性檢查 |
+| `tests/site-structure.test.ts` | 導覽連結、SEO 標題、聯絡資訊、頁面檔案存在性 |
+
+> **注意**：發布候選（`create-rc.sh`）與正式發布（`release.sh`）腳本會在執行前自動跑測試，測試未通過將中止流程。
+
 ## 分支策略與部署
 
 ### 分支說明

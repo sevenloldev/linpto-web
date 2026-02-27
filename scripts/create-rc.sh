@@ -29,6 +29,16 @@ git fetch origin
 # Create or reset preprod branch from dev HEAD
 git checkout dev
 git pull origin dev
+
+# Run tests before proceeding
+echo "🧪 Running tests..."
+npm test
+if [ $? -ne 0 ]; then
+  echo "❌ Tests failed. Fix issues before creating a release candidate."
+  exit 1
+fi
+echo "✅ All tests passed."
+
 git checkout -B preprod
 git push origin preprod --force
 

@@ -23,6 +23,17 @@ echo "🚀 Releasing $TAG to production (main)..."
 
 git fetch origin
 
+# Checkout the tagged commit and run tests
+git checkout "$TAG"
+echo "🧪 Running tests on $TAG..."
+npm test
+if [ $? -ne 0 ]; then
+  echo "❌ Tests failed on $TAG. Aborting release."
+  git checkout main
+  exit 1
+fi
+echo "✅ All tests passed."
+
 # Checkout main and merge the tagged commit
 git checkout main
 git pull origin main
