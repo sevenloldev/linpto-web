@@ -5,6 +5,7 @@ description: 本文整理企業經營過程中最常見的五大法律風險，�
 image:
   url: "/src/images/posts/post-01.jpg"
   alt: 企業法律風險
+featured: true
 tags:
   - 企業法務
   - 法律風險

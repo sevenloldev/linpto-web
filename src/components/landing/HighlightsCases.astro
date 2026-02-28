@@ -8,7 +8,8 @@ import CasesCard from "@/components/cases/CasesCard.astro";
 // Content
 import { getCollection } from "astro:content";
 const allCases = await getCollection("cases");
-// Select first 3 cases to highlight
+const featuredCases = allCases.filter((c) => c.data.featured);
+const displayCases = featuredCases.length > 0 ? featuredCases : allCases.slice(0, 2);
 const casesCount = allCases.length;
 ---
 <section class="bg-base-50">
@@ -37,7 +38,7 @@ const casesCount = allCases.length;
       </div>
     </div>
     <div class="grid grid-cols-1 lg:grid-cols-2 mt-12 lg:mt-24 gap-8">
-      {allCases.slice(0, 2).map((caseStudy) => <CasesCard post={caseStudy} />)}
+      {displayCases.slice(0, 2).map((caseStudy) => <CasesCard post={caseStudy} />)}
     </div>
     <div class="bg-white p-8 lg:p-12 mt-8">
       <div

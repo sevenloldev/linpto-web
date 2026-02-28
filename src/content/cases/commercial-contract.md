@@ -13,6 +13,7 @@ pubDate: 2025-06-15
 image:
   url: "/src/images/cases/megacorp.jpg"
   alt: 商業合約糾紛
+featured: true
 tags:
   - 商業合約
   - 跨國糾紛

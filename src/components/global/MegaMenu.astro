@@ -11,13 +11,16 @@ import { getCollection } from "astro:content";
 const { inverted = true } = Astro.props;
 const triggerColor = inverted ? "text-white" : "text-base-800";
 
-// Dynamic content from collections
-const allPosts = (await getCollection("posts"))
-  .sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime())
-  .slice(0, 2);
-const allCases = (await getCollection("cases"))
+// Dynamic content from collections — prefer featured items, fallback to latest
+const allPostsSorted = (await getCollection("posts"))
   .sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime());
-const featuredCase = allCases[0];
+const featuredPosts = allPostsSorted.filter((p) => p.data.featured);
+const displayPosts = (featuredPosts.length > 0 ? featuredPosts : allPostsSorted).slice(0, 2);
+
+const allCasesSorted = (await getCollection("cases"))
+  .sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime());
+const featuredCases = allCasesSorted.filter((c) => c.data.featured);
+const featuredCase = featuredCases.length > 0 ? featuredCases[0] : allCasesSorted[0];
 
 const exploreLinks = [
   { label: "專業領域", href: "/practice-areas" },
@@ -143,7 +146,7 @@ const exploreLinks = [
               </Text>
               <ul class="mt-2 pt-2 border-t border-white/10">
                 {
-                  allPosts.map((post) => (
+                  displayPosts.map((post) => (
                     <li class="py-2 group">
                       <a
                         href={`/blog/posts/${post.slug}`}

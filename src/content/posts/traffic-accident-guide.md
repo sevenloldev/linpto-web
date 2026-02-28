@@ -5,6 +5,7 @@ description: 遇到交通事故時該怎麼辦？本文詳細說明車禍事故�
 image:
   url: "/src/images/posts/post-02.jpg"
   alt: 交通事故
+featured: true
 tags:
   - 交通事故
   - 損害賠償

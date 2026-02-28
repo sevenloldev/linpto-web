@@ -13,6 +13,7 @@ pubDate: 2025-03-10
 image:
   url: "/src/images/cases/globaltech.jpg"
   alt: 智慧財產權訴訟
+featured: true
 tags:
   - 商標侵權
   - 智慧財產權
