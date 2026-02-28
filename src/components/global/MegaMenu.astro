@@ -6,52 +6,33 @@ import HeroImage from "@/images/assets/heroImage.png";
 // Fundations
 import Text from "@/components/fundations/elements/Text.astro";
 import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+// Content
+import { getCollection } from "astro:content";
 const { inverted = true } = Astro.props;
 const triggerColor = inverted ? "text-white" : "text-base-800";
+
+// Dynamic content from collections
+const allPosts = (await getCollection("posts"))
+  .sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime())
+  .slice(0, 2);
+const allCases = (await getCollection("cases"))
+  .sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime());
+const featuredCase = allCases[0];
+
 const exploreLinks = [
-  {
-    label: "專業領域",
-    href: "/practice-areas",
-  },
-  { label: "Cases", href: "/cases" },
+  { label: "專業領域", href: "/practice-areas" },
+  { label: "實務案例", href: "/cases" },
   { label: "律師團隊", href: "/team" },
-  { label: "Journal", href: "/blog" },
+  { label: "法律專欄", href: "/blog" },
   { label: "人才招募", href: "/careers" },
-  {
-    label: "媒體報導",
-    href: "/press-and-media",
-  },
+  { label: "媒體報導", href: "/press-and-media" },
   { label: "據點資訊", href: "/offices" },
-  { label: "Contact", href: "/contact" },
-  {
-    label: "免費法律諮詢",
-    href: "/free-consultation",
-  },
-  {
-    label: "新聞稿",
-    href: "/press-releases",
-  },
+  { label: "聯絡我們", href: "/contact" },
+  { label: "免費法律諮詢", href: "/free-consultation" },
+  { label: "新聞稿", href: "/press-releases" },
   { label: "客戶推薦", href: "/testimonials" },
   { label: "電子報", href: "/newsletter" },
 ];
-const posts = [
-  {
-    title: "Latest 法律專欄 Post",
-    slug: "1",
-    description: "Insights and updates from our team.",
-  },
-  {
-    title: "Second 法律專欄 Post",
-    slug: "2",
-    description: "More news and legal commentary.",
-  },
-];
-const featuredCase = {
-  title: "Acme Acquires Beta",
-  slug: "acme-acquires-beta",
-  summary: "A major acquisition handled by our firm.",
-  category: "Corporate Law",
-};
 ---
 
 <div class="group" data-mega-wrap>
@@ -63,7 +44,7 @@ const featuredCase = {
     data-mega-trigger
     data-explore-trigger
   >
-    <span>Explore</span>
+    <span>探索</span>
     <svg
       class="size-4 transition-transform group-hover:rotate-180"
       viewBox="0 0 24 24"
@@ -94,7 +75,7 @@ const featuredCase = {
                 src={HeroImage}
                 width={600}
                 height={600}
-                alt="翰霖法律事務所 - Professional Legal Services"
+                alt="翰霖法律事務所"
                 class="object-cover object-top w-full h-40 rounded-lg"
                 loading="eager"
                 decoding="async"
@@ -104,13 +85,10 @@ const featuredCase = {
                 variant="textXL"
                 class="font-display text-white mt-4"
               >
-                About 翰霖法律事務所
+                關於翰霖法律事務所
               </Text>
               <Text tag="p" variant="textSM" class="text-base-600 mt-2">
-                翰霖法律事務所 is dedicated to providing strategic legal counsel
-                and unwavering advocacy for our clients. With decades of
-                experience, our team delivers results-driven solutions for
-                businesses and individuals facing complex legal challenges.
+                翰霖法律事務所致力於為客戶提供專業的法律策略與堅定的權益維護。我們的團隊擁有豐富經驗，為企業與個人提供全方位法律服務。
               </Text>
               <div
                 class="w-full mt-4 pt-4 border-t border-white/10 space-y-2 flex flex-col"
@@ -138,7 +116,7 @@ const featuredCase = {
           </div>
           <div class="p-6 h-full">
             <Text tag="h3" variant="textXS" class="text-secondary-400 gap-2">
-              Explore
+              探索
             </Text>
             <ul class="space-y-2 mt-2 pt-2 border-t border-white/10">
               {
@@ -161,32 +139,30 @@ const featuredCase = {
           <div class="p-6 h-full flex flex-col justify-between">
             <div>
               <Text tag="h3" variant="textXS" class="text-secondary-400 gap-2">
-                Insights
+                最新文章
               </Text>
               <ul class="mt-2 pt-2 border-t border-white/10">
                 {
-                  posts.map((post) => (
+                  allPosts.map((post) => (
                     <li class="py-2 group">
                       <a
                         href={`/blog/posts/${post.slug}`}
-                        aria-label={`Read: ${post.title}`}
+                        aria-label={`閱讀：${post.data.title}`}
                       >
                         <Text
                           tag="h4"
                           variant="textSM"
                           class="font-medium text-base-200"
                         >
-                          {post.title}
+                          {post.data.title}
                         </Text>
-                        {post.description && (
-                          <Text
-                            tag="p"
-                            variant="textXS"
-                            class="text-base-600 mt-1 "
-                          >
-                            {post.description}
-                          </Text>
-                        )}
+                        <Text
+                          tag="p"
+                          variant="textXS"
+                          class="text-base-600 mt-1"
+                        >
+                          {post.data.description}
+                        </Text>
                       </a>
                     </li>
                   ))
@@ -197,43 +173,45 @@ const featuredCase = {
               href="/blog"
               class="text-sm text-white hover:text-accent-400 flex mt-4 pt-4 border-t border-white/10"
             >
-              Explore all insights
+              查看所有文章
             </a>
           </div>
           <div class="p-6 h-full flex flex-col justify-between">
             <div>
               <Text tag="h3" variant="textXS" class="text-secondary-400 gap-2">
-                Featured Case
+                精選案例
               </Text>
-              <ul class="mt-2 pt-2 border-t border-white/10">
-                <li class="py-2 group">
-                  <a
-                    href={`/cases/${featuredCase.slug}`}
-                    aria-label={`View case: ${featuredCase.title}`}
-                  >
-                    <Text
-                      tag="h4"
-                      variant="textSM"
-                      class="font-medium text-base-200"
+              {featuredCase && (
+                <ul class="mt-2 pt-2 border-t border-white/10">
+                  <li class="py-2 group">
+                    <a
+                      href={`/cases/${featuredCase.slug}`}
+                      aria-label={`查看案例：${featuredCase.data.title}`}
                     >
-                      {featuredCase.title}
-                    </Text>
-                    <Text tag="p" variant="textXS" class="text-base-600 mt-1">
-                      {featuredCase.summary}
-                    </Text>
-                    <Text tag="p" variant="textXS" class="text-base-600 mt-1">
-                      {featuredCase.category}
-                    </Text>
-                  </a>
-                </li>
-              </ul>
+                      <Text
+                        tag="h4"
+                        variant="textSM"
+                        class="font-medium text-base-200"
+                      >
+                        {featuredCase.data.title}
+                      </Text>
+                      <Text tag="p" variant="textXS" class="text-base-600 mt-1">
+                        {featuredCase.data.description}
+                      </Text>
+                      <Text tag="p" variant="textXS" class="text-base-600 mt-1">
+                        {featuredCase.data.practice}
+                      </Text>
+                    </a>
+                  </li>
+                </ul>
+              )}
             </div>
 
             <a
               href="/cases"
               class="text-sm text-white hover:text-accent-400 flex mt-4 pt-4 border-t border-white/10"
             >
-              查看全部 cases
+              查看所有案例
             </a>
           </div>
         </div>
