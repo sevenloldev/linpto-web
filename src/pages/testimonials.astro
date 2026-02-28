@@ -1,0 +1,259 @@
+---
+// Assets
+import { Image } from "astro:assets";
+import saraImg from "@/images/testimonials/sara.png";
+import lisaImg from "@/images/testimonials/lisa.png";
+import emilyImg from "@/images/testimonials/emily.png";
+import davidImg from "@/images/testimonials/david.png";
+import robertImg from "@/images/testimonials/robert.png";
+import michaelImg from "@/images/testimonials/michael.png";
+// Icons
+import Quote from "@/components/fundations/icons/Quote.astro";
+// Fundations
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Text from "@/components/fundations/elements/Text.astro";
+import Button from "@/components/fundations/elements/Button.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+const testimonials = [
+  {
+    name: "Sarah Johnson",
+    position: "CEO",
+    company: "TechStart Inc.",
+    practiceArea:
+      "CEO of a leading tech startup, transforming industries with innovative solutions.",
+    title: "Exceptional guidance through merger",
+    quote:
+      "翰霖法律事務所 guided us through a complex merger with exceptional expertise. Their strategic approach and attention to detail were instrumental in achieving our goals. The team's communication was outstanding throughout the entire process.",
+    image: saraImg,
+  },
+  {
+    name: "Michael Chen",
+    position: "Founder",
+    company: "Chen Enterprises",
+    practiceArea:
+      "Founder of a dynamic enterprise, resolving complex business disputes and driving growth.",
+    title: "Resolving complex business disputes",
+    quote:
+      "When we faced a challenging business dispute, 翰霖法律事務所 provided aggressive yet thoughtful representation. They achieved a favorable outcome that protected our company's interests and allowed us to continue growing.",
+    image: michaelImg,
+  },
+  {
+    name: "Emily Rodriguez",
+    position: "Managing Director",
+    company: "Rodriguez & Associates",
+    practiceArea:
+      "Managing Director, championing fair workplaces and employment law excellence.",
+    title: "Unparalleled employment law expertise",
+    quote:
+      "The employment law expertise at 翰霖法律事務所 is unparalleled. They handled our complex case with professionalism and achieved results that exceeded our expectations. I highly recommend their services.",
+    image: emilyImg,
+  },
+  {
+    name: "David Thompson",
+    position: "President",
+    company: "Thompson Manufacturing",
+    practiceArea:
+      "President of a manufacturing firm, navigating multi-property acquisitions and commercial real estate challenges.",
+    title: "Seamless multi-property acquisition",
+    quote:
+      "翰霖法律事務所's real estate team helped us navigate a multi-property acquisition seamlessly. Their knowledge of commercial real estate law and negotiation skills were crucial to our success.",
+    image: davidImg,
+  },
+  {
+    name: "Lisa Park",
+    position: "Partner",
+    company: "Park Family Office",
+    practiceArea:
+      "Partner at a family office, securing legacies through thoughtful estate planning.",
+    title: "Comprehensive estate planning solutions",
+    quote:
+      "Working with 翰霖法律事務所 on our estate planning was a truly positive experience. They took the time to understand our unique family situation and provided comprehensive solutions that gave us peace of mind.",
+    image: lisaImg,
+  },
+  {
+    name: "Robert Williams",
+    position: "Chairman",
+    company: "Williams Group",
+    practiceArea:
+      "Chairman of a technology group, protecting innovations and intellectual property assets.",
+    title: "Protecting our innovations",
+    quote:
+      "The intellectual property team at 翰霖法律事務所 protected our innovations with precision and expertise. Their proactive approach and deep industry knowledge were invaluable to our technology company.",
+    image: robertImg,
+  },
+];
+const stats = [
+  { number: "500+", label: "Satisfied Clients" },
+  { number: "98%", label: "Success Rate" },
+  { number: "25+", label: "Years Experience" },
+  { number: "50+", label: "Cases Won" },
+];
+---
+
+<BaseLayout>
+  <section>
+    <Wrapper variant="standard" class="pb-12 pt-48">
+      <div class="max-w-xl">
+        <Text
+          tag="h1"
+          variant="displayLG"
+          class="text-accent-800 font-display text-balance"
+        >
+          Client 客戶推薦
+        </Text>
+        <Text
+          tag="p"
+          variant="textSM"
+          class="text-base-600 leading-relaxed border-accent-500 mt-2"
+        >
+          Don't just take our word for it. Hear from our satisfied clients who
+          have experienced the 翰霖法律事務所 difference. Our commitment to
+          excellence and client satisfaction is reflected in the success stories
+          shared by those we've had the privilege to serve.
+        </Text>
+      </div>
+      <ul
+        class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-y-8 mt-12 lg:mt-24 lg:divide-x lg:divide-base-200 lg:border-x lg:border-base-200"
+      >
+        {
+          stats.map((stat) => (
+            <li class=" flex flex-col  gap-1 lg:gap-48 lg:px-4 ">
+              <Text
+                tag="p"
+                variant="textBase"
+                class="text-base-700 font-medium uppercase"
+              >
+                {stat.label}
+              </Text>
+              <Text
+                tag="p"
+                variant="displayLG"
+                class="text-accent-800 font-display italic font-medium"
+              >
+                {stat.number}
+              </Text>
+            </li>
+          ))
+        }
+      </ul>
+    </Wrapper>
+    <Wrapper variant="paddingLess" class="py-24">
+      <div class="space-y8">
+        {
+          testimonials.map((testimonial, idx) => {
+            const leftFirst = idx % 2 === 0;
+            const imageOrder = leftFirst ? "lg:order-1" : "lg:order-2";
+            const quoteOrder = leftFirst ? "lg:order-2" : "lg:order-1";
+            return (
+              <div class="grid grid-cols-1 lg:grid-cols-2">
+                <div
+                  class={`relative w-full ${imageOrder} h-[80dvh]  lg:h-[90dvh]`}
+                >
+                  <Image
+                    src={testimonial.image}
+                    alt={testimonial.name}
+                    width={1200}
+                    height={1200}
+                    class="object-cover object-top w-full h-full"
+                  />
+                  <div class="absolute inset-0 flex flex-col items-start justify-end px-6 sm:px-8 z-10 pb-6 sm:pb-8">
+                    <div class="bg-accent-900/90 lg:bg-accent-900/80 p-6 sm:p-8 ">
+                      <Text
+                        tag="p"
+                        variant="textXS"
+                        class="text-secondary-400 tracking-wide uppercase"
+                      >
+                        {testimonial.position},{testimonial.company}
+                      </Text>
+                      <Text
+                        tag="h2"
+                        variant="displayMD"
+                        class="text-white font-display text-balance mt-12 font-light"
+                      >
+                        {testimonial.name}
+                      </Text>
+                      <Text
+                        tag="p"
+                        variant="textBase"
+                        class="text-base-300 mt-2 text-balance"
+                      >
+                        {testimonial.practiceArea}
+                      </Text>
+                    </div>
+                  </div>
+                </div>
+                <div class={`p-8 flex flex-col bg-accent-900 ${quoteOrder}`}>
+                  <Quote slot="icon" class="size-14 text-secondary-400" />
+                  <blockquote>
+                    <Text
+                      tag="h2"
+                      variant="displayLG"
+                      class="text-white font-display text-balance mt-24 font-light"
+                    >
+                      {testimonial.title}
+                    </Text>
+                    <Text
+                      tag="p"
+                      variant="textBase"
+                      class=" text-base-300 leading-relaxed mt-4 text-balance"
+                    >
+                      {testimonial.quote}
+                    </Text>
+                  </blockquote>
+                </div>
+              </div>
+            );
+          })
+        }
+      </div>
+    </Wrapper>
+    <Wrapper variant="standard" class="py-12">
+      <div class="bg-base-50 p-8 lg:p-12">
+        <div
+          class="flex flex-col lg:flex-row items-start lg:items-end justify-between gap-6"
+        >
+          <div>
+            <Text
+              tag="h3"
+              variant="displaySM"
+              class="text-accent-800 font-display"
+            >
+              Ready to join our success stories?
+            </Text>
+            <Text
+              tag="p"
+              variant="textSM"
+              class="text-base-600 mt-1 text-balance"
+            >
+              Experience the 翰霖法律事務所 difference. Our track record speaks
+              for itself, and we're ready to add your success story to our
+              growing list of satisfied clients.
+            </Text>
+          </div>
+          <div
+            class="flex flex-col lg:flex-row w-full lg:w-fit items-center gap-2 shrink-0"
+          >
+            <Button
+              isLink={true}
+              href="/free-consultation"
+              variant="default"
+              size="sm"
+              class="w-full lg:w-fit"
+            >
+              免費法律諮詢
+            </Button>
+            <Button
+              isLink={true}
+              variant="muted"
+              size="sm"
+              href="/contact"
+              class="w-full lg:w-fit"
+            >
+              聯絡我們
+            </Button>
+          </div>
+        </div>
+      </div>
+    </Wrapper>
+  </section>
+</BaseLayout>

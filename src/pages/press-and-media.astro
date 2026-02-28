@@ -1,0 +1,283 @@
+---
+// Fundations
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Text from "@/components/fundations/elements/Text.astro";
+import Button from "@/components/fundations/elements/Button.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+// Components
+import PressCard from "@/components/press/PressCard.astro";
+import LogoCloud from "@/components/testimonials/LogoCloud.astro";
+// Content
+import { getCollection } from "astro:content";
+const pressReleasesData = await getCollection("pressReleases");
+const pressReleases = pressReleasesData.map((release) => ({
+  slug: release.slug,
+  data: release.data,
+}));
+const mediaCoverage = [
+  {
+    title: "How carrington law is revolutionizing corporate legal services",
+    publication: "Business Law Today",
+    date: "November 2024",
+    type: "Feature Article",
+    excerpt:
+      "An in-depth look at how 翰霖法律事務所's innovative approach to corporate law is setting new industry standards.",
+  },
+  {
+    title: "翰霖 law partners with local community organizations",
+    publication: "Legal Gazette",
+    date: "October 2024",
+    type: "News Article",
+    excerpt:
+      "Coverage of the firm's commitment to community service and pro bono legal work in underserved communities.",
+  },
+  {
+    title: "The future of litigation: insights from carrington law",
+    publication: "American Lawyer",
+    date: "September 2024",
+    type: "Interview",
+    excerpt:
+      "Managing Partner discusses emerging trends in business litigation and dispute resolution strategies.",
+  },
+  {
+    title: "翰霖 law's impact on employment law reform",
+    publication: "Labor Law Journal",
+    date: "August 2024",
+    type: "Analysis",
+    excerpt:
+      "Examination of the firm's role in shaping employment law policies and workplace regulations.",
+  },
+];
+
+const mediaStats = [
+  { number: "150+", label: "Media Mentions" },
+  { number: "25+", label: "Publications Featured" },
+  { number: "50+", label: "新聞稿" },
+  { number: "10+", label: "Years of Coverage" },
+];
+---
+
+<BaseLayout>
+  <section>
+    <Wrapper variant="standard" class="pb-12 pt-48">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-y-8 gap-x-12">
+        <div>
+          <div class="lg:sticky lg:top-48">
+            <Text
+              tag="h1"
+              variant="displayMD"
+              class="text-accent-800 font-display text-balance"
+            >
+              Press and Media
+            </Text>
+            <Text tag="p" variant="textSM" class="text-base-700 mt-2">
+              翰霖法律事務所 maintains strong relationships with media outlets
+              and industry publications. Our thought leadership and legal
+              expertise regularly appear in major publications, providing
+              valuable insights to businesses and legal professionals
+              nationwide.
+            </Text>
+          </div>
+        </div>
+        <div class="lg:col-span-2 space-y-24">
+          <div>
+            <Text
+              tag="h3"
+              variant="displayXS"
+              class="text-accent-800 font-display"
+            >
+              Latest press releases
+            </Text>
+            <div class="space-y-8 mt-4">
+              {pressReleases.map((release) => <PressCard post={release} />)}
+            </div>
+          </div>
+          <div>
+            <div>
+              <Text
+                tag="h3"
+                variant="displayXS"
+                class="text-accent-800 font-display"
+              >
+                Recent Media Coverage
+              </Text>
+              <div class="space-y-8 mt-4">
+                {
+                  mediaCoverage.map((coverage) => (
+                    <article class="bg-base-50 p-8 flex flex-col">
+                      <div class="flex items-center gap-2 text-xs text-base-600">
+                        <span>{coverage.publication}</span>
+                        <span aria-hidden="true">•</span>
+                        <span>{coverage.date}</span>
+                        <span aria-hidden="true">•</span>
+                        <span>{coverage.type}</span>
+                      </div>
+                      <Text
+                        tag="h3"
+                        variant="displaySM"
+                        class="text-accent-800 font-display mt-12"
+                      >
+                        {coverage.title}
+                      </Text>
+                      <Text
+                        tag="p"
+                        variant="textBase"
+                        class="text-base-600 leading-relaxed line-clamp-3"
+                      >
+                        {coverage.excerpt}
+                      </Text>
+                    </article>
+                  ))
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Wrapper>
+    <Wrapper variant="standard" class="py-12 lg:py-24">
+      <div class="grid grid-cols-1 lg:grid-cols-4 items-start gap-y-8">
+        <Text
+          tag="p"
+          variant="textXS"
+          class="text-secondary-500 font-semibold tracking-wide uppercase"
+        >
+          Media Impact
+        </Text>
+        <div class="lg:col-span-3">
+          <Text
+            tag="h2"
+            variant="displayLG"
+            class="text-accent-800 font-display text-balance lg:col-span-2"
+          >
+            Reputation built on recognition
+          </Text>
+          <Text
+            tag="p"
+            variant="textBase"
+            class="text-base-700 mt-2 lg:text-balance"
+          >
+            翰霖法律事務所 is regularly featured in leading publications and
+            cited for its expertise, thought leadership, and industry influence.
+            The numbers below reflect our ongoing presence in the media and our
+            reputation among peers and professionals.
+          </Text>
+        </div>
+      </div>
+      <ul
+        class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-y-8 mt-12 lg:mt-24 lg:divide-x lg:divide-base-200 lg:border-x lg:border-base-200"
+      >
+        {
+          mediaStats.map((stat) => (
+            <li class=" flex flex-col  gap-1 lg:gap-48 lg:px-4 ">
+              <Text
+                tag="p"
+                variant="textBase"
+                class="text-base-700 font-medium uppercase"
+              >
+                {stat.label}
+              </Text>
+              <Text
+                tag="p"
+                variant="displayLG"
+                class="text-accent-800 font-display italic font-medium"
+              >
+                {stat.number}
+              </Text>
+            </li>
+          ))
+        }
+      </ul>
+    </Wrapper>
+    <Wrapper variant="standard" class="py-12 lg:py-24">
+      <div class="grid grid-cols-1 lg:grid-cols-4 items-start gap-y-8">
+        <Text
+          tag="p"
+          variant="textXS"
+          class="text-secondary-500 font-semibold tracking-wide uppercase"
+        >
+          Trusted by Leading Publications
+        </Text>
+        <div class="lg:col-span-3">
+          <Text
+            tag="h2"
+            variant="displayLG"
+            class="text-accent-800 font-display text-balance lg:col-span-2"
+          >
+            Featured in
+          </Text>
+          <Text
+            tag="p"
+            variant="textBase"
+            class="text-base-700 mt-2 lg:text-balance"
+          >
+            翰霖法律事務所 is regularly featured in top-tier media and legal
+            industry outlets. Our expertise and thought leadership are
+            recognized by respected publications, reflecting our reputation for
+            excellence and influence in the legal field.
+          </Text>
+        </div>
+      </div>
+      <LogoCloud />
+      <div class="bg-base-50 p-8 lg:p-12 mt-12 lg:mt-24">
+        <div
+          class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 lg:items-end"
+        >
+          <div>
+            <Text
+              tag="h3"
+              variant="displaySM"
+              class="text-accent-800 font-display"
+            >
+              Media Inquiries
+            </Text>
+            <Text
+              tag="p"
+              variant="textSM"
+              class="text-base-600 mt-1 text-balance"
+            >
+              For press inquiries, interview requests, or media opportunities,
+              please contact our communications team. We respond to all media
+              inquiries within 24 hours.
+            </Text>
+            <div class="space-y-12 gap-4 mt-8">
+              <div>
+                <Text tag="p" variant="textSM" class="font-semibold">
+                  Press Contact
+                </Text>
+                <div class="space-y-1 text-sm text-base-700 mt-4">
+                  <Text tag="p" variant="textXS"> Sarah Mitchell </Text>
+                  <Text tag="p" variant="textXS">
+                    Director of Communications
+                  </Text>
+                  <a
+                    href="mailto:press@carringtonlaw.com"
+                    class="text-secondary-500 hover:text-accent-80 transition-colors text-xs block"
+                  >
+                    press@carringtonlaw.com
+                  </a>
+                  <a
+                    href="tel:+15551234567"
+                    class="text-secondary-500 hover:text-accent-80 transition-colors text-xs block"
+                  >
+                    (555) 123-4567
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <Button
+            isLink={true}
+            href="/contact"
+            variant="default"
+            size="sm"
+            class="w-full lg:w-fit shrink-0"
+          >
+            Media Team
+          </Button>
+        </div>
+      </div>
+    </Wrapper>
+  </section>
+</BaseLayout>

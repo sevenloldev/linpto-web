@@ -1,0 +1,512 @@
+---
+// Fundations
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Text from "@/components/fundations/elements/Text.astro";
+import Button from "@/components/fundations/elements/Button.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+// Icons
+import Plus from "@/components/fundations/icons/Plus.astro";
+import Check from "@/components/fundations/icons/Check.astro";
+import Goals from "@/components/fundations/icons/Goals.astro";
+import Dollar from "@/components/fundations/icons/Dollar.astro";
+import Action from "@/components/fundations/icons/Action.astro";
+import Analisys from "@/components/fundations/icons/Analisys.astro";
+
+const consultationBenefitList = [
+  "No upfront costs or fees",
+  "Experienced attorney consultation",
+  "Clear assessment of your situation",
+  "Personalized legal guidance",
+];
+const consultationBenefits = [
+  {
+    title: "No Cost Assessment",
+    description:
+      "Get expert legal advice without any upfront fees or obligations. We believe everyone deserves access to quality legal guidance.",
+    icon: Dollar,
+  },
+  {
+    title: "Expert Evaluation",
+    description:
+      "Receive a thorough analysis of your legal situation from experienced attorneys who understand the nuances of your case.",
+    icon: Analisys,
+  },
+  {
+    title: "Clear Action Plan",
+    description:
+      "Walk away with a clear understanding of your options, potential outcomes, and recommended next steps for your legal matter.",
+    icon: Action,
+  },
+  {
+    title: "Personalized Strategy",
+    description:
+      "Discuss your unique situation and receive tailored advice that addresses your specific goals and concerns.",
+    icon: Goals,
+  },
+];
+const whatToExpect = [
+  {
+    step: "Initial Discussion",
+    description:
+      "We'll start by understanding your legal needs and the background of your situation.",
+  },
+  {
+    step: "Case Assessment",
+    description:
+      "Our attorneys will evaluate the facts, applicable laws, and potential strategies for your case.",
+  },
+  {
+    step: "Options Review",
+    description:
+      "We'll discuss various approaches, potential outcomes, and associated costs or considerations.",
+  },
+  {
+    step: "Next Steps",
+    description:
+      "Receive clear guidance on how to proceed, whether with our firm or alternative options.",
+  },
+];
+const consultationFaqs = [
+  {
+    question: "How long does a free consultation last?",
+    answer:
+      "Our initial consultations typically last 30-45 minutes, providing sufficient time to understand your situation and provide meaningful guidance.",
+  },
+  {
+    question: "Do I need to bring any documents?",
+    answer:
+      "While not always required, bringing relevant documents, contracts, or correspondence related to your legal matter can help us provide more specific advice.",
+  },
+  {
+    question: "What types of cases do you handle?",
+    answer:
+      "We handle a wide range of legal matters including corporate law, litigation, employment law, real estate, intellectual property, and more. 聯絡我們 to discuss your specific needs.",
+  },
+  {
+    question: "Will I be obligated to hire you after the consultation?",
+    answer:
+      "Absolutely not. Our free consultation is designed to help you make informed decisions about your legal needs without any pressure or obligation.",
+  },
+  {
+    question: "Can I bring someone with me to the consultation?",
+    answer:
+      "Yes, you're welcome to bring a spouse, family member, or business partner. We understand that legal matters often involve multiple stakeholders.",
+  },
+];
+---
+
+<BaseLayout>
+  <section>
+    <Wrapper variant="standard" class="pb-12 pt-48">
+      <div class="max-w-xl">
+        <Text
+          tag="h1"
+          variant="displayLG"
+          class="text-accent-800 font-display text-balance"
+        >
+          Free legal consultation
+        </Text>
+        <Text
+          tag="p"
+          variant="textSM"
+          class="text-base-600 leading-relaxed border-accent-500 mt-2"
+        >
+          Take the first step towards resolving your legal concerns with
+          confidence. Our experienced attorneys offer complimentary
+          consultations to help you understand your options and make informed
+          decisions about your legal matters.
+        </Text>
+      </div>
+      <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mt-12 gap-8">
+        {
+          consultationBenefitList.map((benefit) => (
+            <li class="flex items-start gap-2 text-sm text-base-600">
+              <Check slot="icon" size="base" class="text-secondary-500" />
+              <span>{benefit}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </Wrapper>
+
+    <Wrapper variant="standard" class="py-12 lg:py-24">
+      <div
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 items-start gap-y-8 gap-x-4"
+      >
+        <Text
+          tag="p"
+          variant="textXS"
+          class="text-secondary-500 tracking-wide uppercase"
+        >
+          Complimentary & confidential
+        </Text>
+        <div class="lg:col-span-3">
+          <Text
+            tag="h2"
+            variant="displayLG"
+            class="text-accent-800 font-display text-balance"
+          >
+            Why choose our free consultation?
+          </Text>
+          <Text tag="p" variant="textLG" class="text-base-600 mt-4">
+            We believe everyone deserves access to expert legal advice. Our free
+            consultation is designed to help you understand your options, get
+            clear answers, and move forward with confidence—without any pressure
+            or obligation.
+          </Text>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-4 mt-12 lg:mt-24 gap-8">
+        {
+          consultationBenefits.map((benefit) => (
+            <div class="bg-base-50  p-8 flex flex-col">
+              {benefit.icon && (
+                <benefit.icon class="size-8 text-secondary-400 " />
+              )}
+              <Text
+                tag="h3"
+                variant="textXL"
+                class="text-accent-800 font-display mt-12"
+              >
+                {benefit.title}
+              </Text>
+              <Text
+                tag="p"
+                variant="textSM"
+                class="text-base-600 font-medium mt-2"
+              >
+                {benefit.description}
+              </Text>
+            </div>
+          ))
+        }
+      </div>
+    </Wrapper>
+    <Wrapper variant="standard" class="py-12 lg:py-24">
+      <Text
+        tag="h2"
+        variant="displayMD"
+        class="text-accent-800 font-display text-balance"
+      >
+        Schedule your consultation
+      </Text>
+      <div class="grid grid-cols-1 lg:grid-cols-2 mt-12">
+        <dl class="p-8 h-full flex flex-col justify-start bg-base-50 space-y-8">
+          {
+            whatToExpect.map((item, index) => (
+              <div class="bg-white  p-8 flex flex-col items-start">
+                <dt>
+                  <Text
+                    tag="p"
+                    variant="displayXL"
+                    class="text-accent-800 font-display italic font-medium"
+                  >
+                    {index + 1}
+                  </Text>
+                  <Text
+                    tag="h3"
+                    variant="displaySM"
+                    class="text-base-800 font-display mt-12"
+                  >
+                    {item.step}
+                  </Text>
+                </dt>
+                <dd>
+                  <Text
+                    tag="p"
+                    variant="textSM"
+                    class="text-base-600 text-balance"
+                  >
+                    {item.description}
+                  </Text>
+                </dd>
+              </div>
+            ))
+          }
+        </dl>
+        <div>
+          <form class="space-y-4 p-8 bg-accent-900 sticky top-8 lg:top-48">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label
+                  for="firstName"
+                  class="block text-xs font-medium text-base-300"
+                >
+                  First Name *
+                </label>
+                <input
+                  type="text"
+                  id="firstName"
+                  name="firstName"
+                  required
+                  class="w-full px-3 py-2 border-b border-transparent h-12 bg-white/5 focus:outline-none focus:bg-white/8 text-white text-xs focus:ring-0"
+                />
+              </div>
+              <div>
+                <label
+                  for="lastName"
+                  class="block text-xs font-medium text-base-300"
+                >
+                  Last Name *
+                </label>
+                <input
+                  type="text"
+                  id="lastName"
+                  name="lastName"
+                  required
+                  class="w-full px-3 py-2 border-b border-transparent h-12 bg-white/5 focus:outline-none focus:bg-white/8 text-white text-xs focus:ring-0"
+                />
+              </div>
+            </div>
+            <div class="space-y-1">
+              <label
+                for="email"
+                class="block text-xs font-medium text-base-300"
+              >
+                Email Address *
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                class="w-full px-3 py-2 border-b border-transparent h-12 bg-white/5 focus:outline-none focus:bg-white/8 text-white text-xs focus:ring-0"
+              />
+            </div>
+            <div class="space-y-1">
+              <label
+                for="phone"
+                class="block text-xs font-medium text-base-300"
+              >
+                電話號碼 *
+              </label>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                required
+                class="w-full px-3 py-2 border-b border-transparent h-12 bg-white/5 focus:outline-none focus:bg-white/8 text-white text-xs focus:ring-0"
+              />
+            </div>
+            <div class="space-y-1">
+              <label
+                for="practiceArea"
+                class="block text-xs font-medium text-base-300"
+              >
+                Practice Area *
+              </label>
+              <select
+                id="practiceArea"
+                name="practiceArea"
+                required
+                class="w-full px-3 py-2 border-b border-transparent h-12 bg-white/5 focus:outline-none focus:bg-white/8 text-white text-xs focus:ring-0"
+              >
+                <option value="">Select a practice area</option>
+                <option value="corporate">Corporate Law</option>
+                <option value="criminal">Criminal Defense</option>
+                <option value="family">Family Law</option>
+                <option value="personal-injury">Personal Injury</option>
+                <option value="real-estate">Real Estate</option>
+                <option value="employment">Employment Law</option>
+                <option value="intellectual-property"
+                  >Intellectual Property</option
+                >
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div class="space-y-1">
+              <label
+                for="preferredDate"
+                class="block text-xs font-medium text-base-300"
+              >
+                Preferred Date
+              </label>
+              <input
+                type="date"
+                id="preferredDate"
+                name="preferredDate"
+                class="w-full px-3 py-2 border-b border-transparent h-12 bg-white/5 focus:outline-none focus:bg-white/8 text-white text-xs focus:ring-0"
+              />
+            </div>
+            <div class="space-y-1">
+              <label
+                for="preferredTime"
+                class="block text-xs font-medium text-base-300"
+              >
+                Preferred Time
+              </label>
+              <select
+                id="preferredTime"
+                name="preferredTime"
+                class="w-full px-3 py-2 border-b border-transparent h-12 bg-white/5 focus:outline-none focus:bg-white/8 text-white text-xs focus:ring-0"
+              >
+                <option value="">Select preferred time</option>
+                <option value="morning">Morning (9 AM - 12 PM)</option>
+                <option value="afternoon">Afternoon (12 PM - 5 PM)</option>
+                <option value="evening">Evening (5 PM - 7 PM)</option>
+              </select>
+            </div>
+            <div class="space-y-1">
+              <label
+                for="consultationType"
+                class="block text-xs font-medium text-base-300"
+              >
+                Consultation Type
+              </label>
+              <select
+                id="consultationType"
+                name="consultationType"
+                class="w-full px-3 py-2 border-b border-transparent h-12 bg-white/5 focus:outline-none focus:bg-white/8 text-white text-xs focus:ring-0"
+              >
+                <option value="in-person">In-Person (New York Office)</option>
+                <option value="phone">Phone Consultation</option>
+                <option value="video">Video Conference</option>
+              </select>
+            </div>
+            <div class="space-y-1">
+              <label
+                for="message"
+                class="block text-xs font-medium text-base-300"
+              >
+                Brief Description of Your Legal Matter
+              </label>
+              <textarea
+                id="message"
+                name="message"
+                rows="4"
+                placeholder="Please provide a brief overview of your legal situation..."
+                class="w-full px-3 py-2 border-b border-transparent bg-white/5 focus:outline-none focus:bg-white/8 text-white text-xs focus:ring-0"
+              ></textarea>
+            </div>
+            <div class="flex items-start space-x-3">
+              <input
+                type="checkbox"
+                id="privacy"
+                name="privacy"
+                required
+                class="mt-1 size-4 text-accent-600 focus:ring-accent-500 ring-offset-accent-900 border-white/10 rounded bg-accent-800"
+              />
+              <label for="privacy" class="text-xs text-base-400">
+                I agree to 翰霖法律事務所's privacy policy and consent to being
+                contacted regarding my consultation request. 查看我們的 <a
+                  href="/privacy"
+                  class="text-secondary-400 hover:text-accent-700 underline"
+                  >Privacy Policy</a
+                >.
+              </label>
+            </div>
+            <Button variant="muted" size="sm" type="submit" class="w-full">
+              Schedule 免費法律諮詢
+            </Button>
+          </form>
+        </div>
+      </div>
+    </Wrapper>
+
+    <Wrapper variant="standard" class="py-12 lg:py-24">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-y-8 gap-x-12">
+        <Text
+          tag="h2"
+          variant="displayMD"
+          class="text-accent-800 font-display text-balance"
+        >
+          Frequently Asked Questions
+        </Text>
+        <div class="lg:col-span-2 divide-y divide-base-100 space-y-4">
+          {
+            consultationFaqs.map((faq) => (
+              <details class="transition-colors pb-4 group">
+                <summary class=" text-lg cursor-pointer text-accent-800 flex justify-between items-center group-open:text-secondary-500">
+                  <span>{faq.question}</span>
+                  <Plus
+                    slot="icon"
+                    size="sm"
+                    class="text-base-700 transition-transform group-open:rotate-180 duration-300"
+                  />
+                </summary>
+                <div class="mt-4 text-base-700 leading-relaxed">
+                  <Text tag="p" variant="textBase">
+                    {faq.answer}
+                  </Text>
+                </div>
+              </details>
+            ))
+          }
+        </div>
+      </div>
+      <div class="bg-base-50 p-8 lg:p-12 mt-12 lg:mt-24">
+        <div
+          class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 lg:items-end"
+        >
+          <div>
+            <Text
+              tag="h3"
+              variant="displaySM"
+              class="text-accent-800 font-display"
+            >
+              Need Immediate Assistance?
+            </Text>
+            <Text
+              tag="p"
+              variant="textSM"
+              class="text-base-600 mt-1 text-balance"
+            >
+              For urgent legal matters or questions about scheduling, contact
+              our team directly. We're here to help.
+            </Text>
+            <div class="space-y-12 gap-4 mt-8">
+              <div>
+                <Text
+                  tag="p"
+                  variant="textSM"
+                  class="font-semibold text-accent-800"
+                >
+                  Quick Contact
+                </Text>
+                <div class="space-y-1 text-sm text-base-700 mt-4">
+                  <a
+                    href="mailto:press@carringtonlaw.com"
+                    class="text-secondary-500 hover:text-accent-80 transition-colors text-xs block"
+                  >
+                    press@carringtonlaw.com
+                  </a>
+                  <a
+                    href="tel:+15551234567"
+                    class="text-secondary-500 hover:text-accent-80 transition-colors text-xs block"
+                  >
+                    (555) 123-4567
+                  </a>
+                </div>
+              </div>
+              <div class="text-sm text-base-700 mt-4">
+                <Text
+                  tag="p"
+                  variant="textSM"
+                  class="font-semibold text-accent-800"
+                >
+                  Office Hours
+                </Text>
+                <Text tag="p" variant="textXS" class="mt-4">
+                  <strong>Mon-Fri:</strong> 8AM-6PM
+                  <br />
+                  <strong>Sat:</strong> 9AM-2PM
+                </Text>
+              </div>
+            </div>
+          </div>
+
+          <Button
+            isLink={true}
+            href="/contact"
+            variant="default"
+            size="sm"
+            class="w-full lg:w-fit shrink-0"
+          >
+            聯絡我們 Directly
+          </Button>
+        </div>
+      </div>
+    </Wrapper>
+  </section>
+</BaseLayout>

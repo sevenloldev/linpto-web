@@ -1,61 +1,24 @@
 ---
+// Fundations
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import Text from "@/components/fundations/elements/Text.astro";
-import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+// Sections
 import Hero from "@/components/landing/Hero.astro";
-import PracticeAreas from "@/components/landing/PracticeAreas.astro";
-import ServiceProcess from "@/components/landing/ServiceProcess.astro";
-import CaseCard from "@/components/cases/CaseCard.astro";
-import { getCollection } from "astro:content";
-
-const allCases = await getCollection("cases");
-allCases.sort((a, b) => {
-  return new Date(b.data.date).getTime() - new Date(a.data.date).getTime();
-});
+import LandingStats from "@/components/landing/LandingStats.astro";
+import Philosophy from "@/components/landing/Philosophy.astro";
+import Aproach from "@/components/landing/Aproach.astro";
+import HighlightsPractice from "@/components/landing/HighlightsPractice.astro";
+import FeaturedAttorneys from "@/components/landing/FeaturedAttorneys.astro";
+import HighlightsCases from "@/components/landing/HighlightsCases.astro";
+import Cta from "@/components/global/Cta.astro";
 ---
 
-<BaseLayout>
+<BaseLayout navTransparent={true}>
   <Hero />
-  <PracticeAreas />
-  <ServiceProcess />
-  <section>
-    <Wrapper class="py-24">
-      <div class="overflow-hidden">
-        <Text
-          tag="h2"
-          variant="textLG"
-          data-aos="fade-up"
-          data-aos-duration="1000"
-          class="dark:text-white text-base-900 text-balance"
-        >
-          實務案例
-        </Text>
-      </div>
-      <div
-        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-1 pt-4 relative before:absolute after:absolute before:bg-black after:bg-base-200 dark:before:bg-base-50 dark:after:bg-base-50/10 before:top-0 before:left-0 before:h-px before:w-18 after:top-0 after:right-0 after:left-20 after:h-px"
-      >
-        {allCases.slice(0, 3).map((c) => (
-          <CaseCard
-            title={c.data.title}
-            category={c.data.category}
-            summary={c.data.summary}
-            status={c.data.status}
-            url={`/cases/${c.slug}`}
-          />
-        ))}
-      </div>
-      <div
-        class="flex justify-end mt-4 pt-2 relative before:absolute after:absolute before:bg-black after:bg-base-200 dark:before:bg-base-50 dark:after:bg-base-50/10 before:top-0 before:left-0 before:h-px before:w-18 after:top-0 after:right-0 after:left-20 after:h-px"
-      >
-        <Text
-          tag="a"
-          href="/cases"
-          variant="textBase"
-          class="dark:text-base-400 text-base-500 text-balance hover:text-accent-500 dark:hover:text-accent-300 duration-300"
-        >
-          查看所有案例 →
-        </Text>
-      </div>
-    </Wrapper>
-  </section>
+  <LandingStats />
+  <Philosophy />
+  <Aproach />
+  <HighlightsPractice />
+  <FeaturedAttorneys />
+  <HighlightsCases />
+  <Cta />
 </BaseLayout>

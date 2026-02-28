@@ -1,0 +1,64 @@
+---
+// Assets
+import { Image } from "astro:assets";
+// Fundations
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Text from "@/components/fundations/elements/Text.astro";
+import Button from "@/components/fundations/elements/Button.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+// Content
+const { frontmatter } = Astro.props;
+---
+
+<BaseLayout navTransparent={true}>
+  <section>
+    <Wrapper variant="paddingLess">
+      <div class="relative overflow-hidden">
+        <Image
+          src={frontmatter.image.url}
+          alt={frontmatter.image.alt}
+          width={1440}
+          height={900}
+          loading="eager"
+          decoding="async"
+          class="object-cover object-center w-full h-[60dvh] lg:h-[72dvh] bg-base-50"
+        />
+        <div
+          aria-hidden="true"
+          class="absolute inset-0 pointer-events-none bg-accent-950/70"
+        >
+        </div>
+      </div>
+    </Wrapper>
+    <Wrapper variant="standard" class="py-12">
+      <div class="grid lg:grid-cols-3 gap-12">
+        <div>
+          <div class="lg:sticky lg:top-48">
+            <Text
+              tag="h1"
+              variant="displayMD"
+              class="text-accent-800 font-display text-balance"
+            >
+              {frontmatter.title}
+            </Text>
+            <Text tag="p" variant="textSM" class="text-base-700 mt-2">
+              {frontmatter.summary}
+            </Text>
+            <Button
+              size="xs"
+              variant="muted"
+              isLink={true}
+              href="/contact"
+              class="w-full lg:w-fit mt-8"
+            >
+              聯絡我們
+            </Button>
+          </div>
+        </div>
+        <Wrapper variant="prose" class="lg:col-span-2">
+          <slot />
+        </Wrapper>
+      </div>
+    </Wrapper>
+  </section>
+</BaseLayout>

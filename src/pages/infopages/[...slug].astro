@@ -1,0 +1,21 @@
+---
+import { getCollection } from "astro:content";
+import LegalPagesLayout from "@/layouts/LegalPagesLayout.astro";
+export async function getStaticPaths() {
+  const infoPages = await getCollection("infopages");
+  const paths = infoPages.map((page) => {
+    return {
+      params: { slug: page.slug },
+      props: { page },
+      trailingSlash: false,
+    };
+  });
+  return paths;
+}
+const { page } = Astro.props;
+const { Content } = await page.render();
+---
+
+<LegalPagesLayout frontmatter={page.data}>
+  <Content />
+</LegalPagesLayout>

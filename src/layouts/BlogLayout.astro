@@ -1,0 +1,163 @@
+---
+// Assets
+import { Image } from "astro:assets";
+// Fundations
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Text from "@/components/fundations/elements/Text.astro";
+import ShareButtons from "@/components/fundations/elements/ShareButtons.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+// Sections
+import SmallBlogCard from "@/components/blog/SmallBlogCard.astro";
+// Icons
+import ArrowLeft from "@/components/fundations/icons/ArrowLeft.astro";
+import ArrowRight from "@/components/fundations/icons/ArrowRight.astro";
+// Content
+const { frontmatter, slug } = Astro.props;
+import { getEntry } from "astro:content";
+const team = frontmatter.team ? await getEntry("team", frontmatter.team) : null;
+// Get all posts and filter by tag
+import { getCollection } from "astro:content";
+import Button from "@/components/fundations/elements/Button.astro";
+const allPosts = (await getCollection("posts")).sort(
+  (a, b) =>
+    new Date(a.data.pubDate).getTime() - new Date(b.data.pubDate).getTime()
+);
+const relatedPosts = allPosts.filter(
+  (post) =>
+    post.slug !== slug &&
+    post.data.tags.some((tag) => frontmatter.tags.includes(tag))
+);
+// Pagination (computed in frontmatter for reuse)
+const currentIndex = allPosts.findIndex((post) => post.slug === slug);
+const prevPost = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
+const nextPost =
+  currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
+const prevUrl = prevPost ? `/blog/posts/${prevPost.slug}` : null;
+const nextUrl = nextPost ? `/blog/posts/${nextPost.slug}` : null;
+const truncate = (str, n) =>
+  typeof str === "string" && str.length > n ? str.slice(0, n - 1) + "…" : str;
+---
+<BaseLayout>
+  <section>
+    <Wrapper variant="standard" class="pb-12 pt-48">
+      <div class="text-center max-w-3xl mx-auto">
+        <Text
+          tag="p"
+          variant="textXS"
+          class="text-secondary-500 uppercase flex items-center gap-2 justify-center"
+        >
+          {
+            frontmatter.tags.map((tag) => (
+              <a
+                class="hover:text-accent-800 transition-colors cursor-pointer"
+                href={`/blog/tags/${tag}`}
+              >
+                {tag}
+              </a>
+            ))
+          }
+          <span aria-hidden="true">•</span>
+          <time datetime={new Date(frontmatter.pubDate).toISOString()}>
+            {
+              new Date(frontmatter.pubDate).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "2-digit",
+              })
+            }
+          </time>
+        </Text>
+        <Text
+          tag="h1"
+          variant="displayXL"
+          class="text-accent-800 font-display text-balance mt-12"
+          >{frontmatter.title}</Text
+        >
+        <Text
+          tag="p"
+          variant="textBase"
+          class="text-base-600 leading-relaxed border-accent-500 mt-4 lg:text-balance"
+        >
+          {frontmatter.description}
+        </Text>
+      </div>
+    </Wrapper>
+    <Image
+      width={1420}
+      height={1420}
+      src={frontmatter.image.url}
+      alt={frontmatter.image.alt}
+      class="object-cover object-top mt-4 size-full lg:max-h-200"
+    />
+    <Wrapper class="py-12 lg:py-24">
+      <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+        <div class="lg:sticky lg:top-24">
+          <ShareButtons description={frontmatter.description} />
+        </div>
+        <Wrapper variant="prose" class="max-w-3xl mx-auto lg:col-span-3">
+          <slot />
+        </Wrapper>
+      </div>
+      <nav
+        class="flex flex-col lg:flex-row justify-between items-start gap-8 mt-4 pt-4 border-t border-base-100"
+      >
+        <div class="lg:w-fit text-left w-full">
+          {
+            prevUrl && prevPost && (
+              <Button
+                size="xs"
+                variant="muted"
+                isLink={true}
+                href={prevUrl}
+                aria-label={`Previous: ${prevPost.data.title}`}
+                class="gap-2"
+              >
+                <ArrowLeft slot="left-icon" size="base" />
+                Previous
+                <span class="sr-only">{truncate(prevPost.data.title, 64)}</span>
+              </Button>
+            )
+          }
+        </div>
+        <div class="lg:w-fit text-right w-full">
+          {
+            nextUrl && nextPost && (
+              <Button
+                size="xs"
+                variant="muted"
+                isLink={true}
+                href={nextUrl}
+                aria-label={`Next: ${nextPost.data.title}`}
+                class="gap-2"
+              >
+                Next
+                <ArrowRight slot="right-icon" size="base" />
+                <span class="sr-only">{truncate(nextPost.data.title, 64)}</span>
+              </Button>
+            )
+          }
+        </div>
+      </nav>
+    </Wrapper>
+    {
+      relatedPosts.length > 0 && (
+        <section>
+          <Wrapper variant="standard" class="py-12 lg:py-24 relative">
+            <Text
+              tag="h2"
+              variant="displayMD"
+              class="text-accent-800 font-display text-balance"
+            >
+              相關 posts
+            </Text>
+            <div class="grid grid-cols-1 lg:grid-cols-3 mt-8 gap-8">
+              {relatedPosts.slice(0, 3).map((post) => (
+                <SmallBlogCard post={post} />
+              ))}
+            </div>
+          </Wrapper>
+        </section>
+      )
+    }
+  </section>
+</BaseLayout>

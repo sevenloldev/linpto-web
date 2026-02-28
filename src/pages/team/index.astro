@@ -1,0 +1,41 @@
+---
+// Fundations
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Text from "@/components/fundations/elements/Text.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+// Components
+import TeamCard from "@/components/team/TeamCard.astro";
+// Content
+import { getCollection } from "astro:content";
+const allTeam = await getCollection("team");
+allTeam.sort((a, b) => (a.data.order || 999) - (b.data.order || 999));
+---
+
+<BaseLayout>
+  <section>
+    <Wrapper variant="standard" class="pb-12 pt-48">
+      <div class="max-w-xl">
+        <Text
+          tag="h1"
+          variant="displayLG"
+          class="text-accent-800 font-display text-balance"
+        >
+          律師團隊
+        </Text>
+        <Text
+          tag="p"
+          variant="textSM"
+          class="text-base-600 leading-relaxed border-accent-500 mt-2"
+        >
+          Don't just take our word for it. Hear from our satisfied clients who
+          have experienced the 翰霖法律事務所 difference. Our commitment to
+          excellence and client satisfaction is reflected in the success stories
+          shared by those we've had the privilege to serve.
+        </Text>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-2 mt-12 lg:mt-24 gap-8">
+        {allTeam.map((member) => <TeamCard post={member} />)}
+      </div>
+    </Wrapper>
+  </section>
+</BaseLayout>

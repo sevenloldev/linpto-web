@@ -1,0 +1,168 @@
+---
+// Fundations
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Text from "@/components/fundations/elements/Text.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+const pageSections = [
+  {
+    title: "Static",
+    columns: [
+      {
+        category: " Pages",
+        links: [
+          { text: "Home", href: "/" },
+          { text: "404", href: "/404" },
+          { text: "常見問題", href: "/faq" },
+          { text: "據點資訊", href: "/offices" },
+          { text: "客戶推薦", href: "/testimonials" },
+          { text: "Press and Media", href: "/press-and-media" },
+          {
+            text: "獎項與榮譽",
+            href: "/awwards-and-recognitions",
+          },
+        ],
+      },
+      {
+        category: " Forms",
+        links: [
+          { text: "Contact", href: "/contact" },
+          { text: "電子報", href: "/newsletter" },
+          { text: "免費法律諮詢", href: "/free-consultation" },
+        ],
+      },
+      {
+        category: "System",
+        links: [
+          { text: "Colors", href: "/system/colors" },
+          { text: "Links", href: "/system/link" },
+          { text: "Buttons", href: "/system/buttons" },
+          { text: "Typography", href: "/system/typography" },
+        ],
+      },
+      {
+        category: "Resources",
+        links: [
+          { text: "Social", href: "https://x.com/lexingtonthemes" },
+          {
+            text: "License",
+            href: "https://lexingtonthemes.com/legal/license",
+          },
+          {
+            text: "Documentation",
+            href: "https://lexingtonthemes.com/documentation/",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    title: "Content Collections",
+    columns: [
+      {
+        category: "法律專欄 Pages",
+        links: [
+          { text: "Home", href: "/blog/" },
+          { text: "Detail", href: "/blog/posts/1" },
+          { text: "Tag Index", href: "/blog/tags" },
+          { text: "Tag Category", href: "/blog/tags/photography" },
+          { text: "RSS", href: "/rss.xml" },
+        ],
+      },
+      {
+        category: "人才招募",
+        links: [
+          { text: "Home", href: "/careers" },
+          { text: "Detail", href: "/careers/senior-litigation-associate" },
+        ],
+      },
+      {
+        category: "Cases",
+        links: [
+          { text: "Home", href: "/cases/" },
+          { text: "Detail", href: "/cases/acme-acquires-beta" },
+        ],
+      },
+      {
+        category: "Team",
+        links: [
+          { text: "Home", href: "/team/" },
+          { text: "Detail", href: "/team/jon-sullivan" },
+        ],
+      },
+      {
+        category: "新聞稿",
+        links: [
+          { text: "Home", href: "/press-releases/" },
+          {
+            text: "Detail",
+            href: "/press-releases/carrington-expands-corporate-practice",
+          },
+        ],
+      },
+      {
+        category: "Utility Pages",
+        links: [
+          { text: "Terms Of Use", href: "/infopages/terms" },
+          { text: "Privacy Policy", href: "/infopages/privacy" },
+        ],
+      },
+    ],
+  },
+];
+---
+
+<BaseLayout>
+  <section>
+    <Wrapper variant="standard" class="pb-12 pt-48">
+      <Text
+        tag="h1"
+        variant="displayMD"
+        class="text-accent-800 font-display text-balance"
+      >
+        Overview
+      </Text>
+      <div class="flex flex-col mt-12 gap-12">
+        {
+          pageSections.map((section) => (
+            <div>
+              <Text
+                tag="h3"
+                variant="displayXS"
+                class="text-accent-800 font-display text-balance"
+              >
+                {section.title}
+              </Text>
+              <div class="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 xl:grid-cols-6">
+                {section.columns.map((column) => (
+                  <div>
+                    <Text
+                      tag="p"
+                      variant="textBase"
+                      class="font-medium text-accent-800"
+                    >
+                      {column.category}
+                    </Text>
+                    <ul role="list" class="mt-2 ">
+                      {column.links.map((link) => (
+                        <li>
+                          <Text
+                            tag="a"
+                            variant="textSM"
+                            href={link.href}
+                            class="text-base-600 hover:text-accent-800 duration-300"
+                          >
+                            {link.text}
+                          </Text>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </Wrapper>
+  </section>
+</BaseLayout>

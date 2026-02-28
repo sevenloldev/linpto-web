@@ -1,92 +1,21 @@
 ---
-import BaseLayout from "@/layouts/BaseLayout.astro";
-import Text from "@/components/fundations/elements/Text.astro";
-import Wrapper from "@/components/fundations/containers/Wrapper.astro";
 import { getCollection } from "astro:content";
-
+import CasesLayout from "@/layouts/CasesLayout.astro";
 export async function getStaticPaths() {
   const cases = await getCollection("cases");
-  return cases.map((c) => ({
-    params: { slug: c.slug },
-    props: { caseStudy: c },
-  }));
+  const paths = cases.map((page) => {
+    return {
+      params: { slug: page.slug },
+      props: { page },
+      trailingSlash: false,
+    };
+  });
+  return paths;
 }
-
-const { caseStudy } = Astro.props;
-const { title, category, summary, status, date, highlights } = caseStudy.data;
-const { Content } = await caseStudy.render();
-const formattedDate = new Date(date).toLocaleDateString("zh-TW", {
-  year: "numeric",
-  month: "long",
-  day: "numeric",
-});
+const { page } = Astro.props;
+const { Content } = await page.render();
 ---
 
-<BaseLayout title={caseStudy.data.title} description={caseStudy.data.summary}>
-  <section>
-    <Wrapper variant="standard" class="pt-8 pb-12">
-      <div class="max-w-2xl">
-        <div class="flex items-center gap-3 mb-4">
-          <span class="text-xs font-medium px-2 py-1 bg-accent-50 dark:bg-accent-950 text-accent-600 dark:text-accent-300 rounded">
-            {category}
-          </span>
-          <span class={`text-xs font-medium px-2 py-1 rounded ${status === "已完成" ? "bg-green-50 dark:bg-green-950 text-green-600 dark:text-green-400" : "bg-yellow-50 dark:bg-yellow-950 text-yellow-600 dark:text-yellow-400"}`}>
-            {status}
-          </span>
-          <span class="text-xs text-base-400 dark:text-base-500">
-            {formattedDate}
-          </span>
-        </div>
-        <div class="overflow-hidden">
-          <Text
-            tag="h1"
-            variant="textXL"
-            data-aos="fade-up"
-            data-aos-duration="1000"
-            class="dark:text-white text-base-900"
-          >
-            {title}
-          </Text>
-        </div>
-        <Text
-          tag="p"
-          variant="textBase"
-          class="mt-4 text-base-500 dark:text-base-300"
-        >
-          {summary}
-        </Text>
-
-        {highlights && highlights.length > 0 && (
-          <div class="mt-8 p-6 bg-base-50 dark:bg-base-900">
-            <Text tag="h3" variant="textBase" class="dark:text-white text-base-900 font-medium">
-              案件重點
-            </Text>
-            <ul class="mt-3 space-y-2">
-              {highlights.map((h: string) => (
-                <li class="text-sm text-base-500 dark:text-base-400 flex items-center gap-2">
-                  <svg class="size-4 text-accent-500 dark:text-accent-300 shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                  </svg>
-                  {h}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-
-        <div class="mt-8 prose prose-sm dark:prose-invert max-w-none">
-          <Content />
-        </div>
-
-        <div class="mt-12">
-          <a
-            href="/cases"
-            class="text-sm text-accent-500 dark:text-accent-300 hover:text-accent-600 dark:hover:text-accent-200 duration-300"
-          >
-            ← 返回所有案例
-          </a>
-        </div>
-      </div>
-    </Wrapper>
-  </section>
-</BaseLayout>
+<CasesLayout frontmatter={page.data}>
+  <Content />
+</CasesLayout>

@@ -1,0 +1,88 @@
+---
+// Assets
+import { Image } from "astro:assets";
+// Fundations
+import Text from "@/components/fundations/elements/Text.astro";
+import Button from "@/components/fundations/elements/Button.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+// Components
+import PracticeCard from "@/components/practices/PracticeCard.astro";
+// Content
+import { getCollection } from "astro:content";
+const allPractices = await getCollection("practice");
+// Select first 4 practice areas to highlight
+const highlightedPractices = allPractices.slice(0, 4);
+const practiceCount = allPractices.length;
+---
+
+<section class="bg-white">
+  <Wrapper variant="standard" class="py-20">
+    <div class="grid grid-cols-1 lg:grid-cols-4 items-start gap-y-8">
+      <Text
+        tag="p"
+        variant="textXS"
+        class="text-secondary-500 tracking-wide uppercase"
+      >
+        Areas of Expertise
+      </Text>
+      <div class="lg:col-span-3">
+        <Text
+          tag="h2"
+          variant="displayLG"
+          class="text-accent-800 font-display text-balance lg:col-span-2"
+        >
+          專業領域
+        </Text>
+        <Text tag="p" variant="textLG" class="text-base-600 mt-4">
+          Our experienced attorneys provide comprehensive legal services across
+          a wide range of practice areas, delivering strategic solutions
+          tailored to your unique needs.
+        </Text>
+      </div>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-1 mt-12 lg:mt-24 gap-8">
+      {highlightedPractices.map((practice) => <PracticeCard post={practice} />)}
+    </div>
+    <div class="bg-base-50 p-8 lg:p-12 mt-8">
+      <div
+        class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6"
+      >
+        <div>
+          <Text
+            tag="h3"
+            variant="displaySM"
+            class="text-accent-800 font-display"
+          >
+            Explore all practice areas
+          </Text>
+          <Text tag="p" variant="textSM" class="text-base-600 mt-1">
+            瀏覽我們的 {practiceCount}+ areas of expertise or talk with us to
+            find the right fit.
+          </Text>
+        </div>
+        <div
+          class="flex flex-col lg:flex-row w-full lg:w-fit items-center gap-2"
+        >
+          <Button
+            isLink={true}
+            href="/practice-areas"
+            variant="default"
+            size="sm"
+            class="w-full lg:w-fit"
+          >
+            查看全部 practice areas
+          </Button>
+          <Button
+            isLink={true}
+            variant="muted"
+            size="sm"
+            href="/free-consultation"
+            class="w-full lg:w-fit"
+          >
+            免費法律諮詢
+          </Button>
+        </div>
+      </div>
+    </div>
+  </Wrapper>
+</section>

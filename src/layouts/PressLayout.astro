@@ -1,0 +1,76 @@
+---
+// Fundations
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Text from "@/components/fundations/elements/Text.astro";
+import Button from "@/components/fundations/elements/Button.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+// Content
+const { frontmatter } = Astro.props;
+---
+
+<BaseLayout>
+  <section>
+    <Wrapper variant="standard" class="pb-12 pt-48">
+      <div class="text-center max-w-3xl mx-auto">
+        <Text
+          tag="p"
+          variant="textXS"
+          class="text-secondary-500 uppercase flex items-center gap-2 justify-center"
+        >
+          <span>
+            {frontmatter.category}
+          </span>
+          <span aria-hidden="true">·</span>
+          <time datetime={frontmatter.pubDate.toISOString()}>
+            {
+              frontmatter.pubDate.toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })
+            }
+          </time>
+        </Text>
+        <Text
+          tag="h1"
+          variant="displayXL"
+          class="text-accent-800 font-display text-balance mt-12"
+        >
+          {frontmatter.title}
+        </Text>
+        <Text
+          tag="p"
+          variant="textBase"
+          class="text-base-600 leading-relaxed border-accent-500 mt-4 lg:text-balance"
+        >
+          {frontmatter.excerpt}
+        </Text>
+      </div>
+      {
+        frontmatter.tags && frontmatter.tags.length > 0 && (
+          <div class="mb-8">
+            <Text
+              tag="h3"
+              variant="textSM"
+              class="font-semibold text-accent-800 mb-3"
+            >
+              標籤
+            </Text>
+            <div class="flex flex-wrap gap-2">
+              {frontmatter.tags.map((tag) => (
+                <span class="bg-base-100 text-base-800 px-3 py-1 rounded-full text-sm border border-base-200">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+        )
+      }
+    </Wrapper>
+    <Wrapper class="py-12">
+      <Wrapper variant="prose" class="max-w-xl mx-auto">
+        <slot />
+      </Wrapper>
+    </Wrapper>
+  </section>
+</BaseLayout>

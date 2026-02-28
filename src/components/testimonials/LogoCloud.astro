@@ -1,0 +1,42 @@
+---
+// Assets
+import { Image } from "astro:assets";
+import newyorktimes from "@/images/mediaLogos/newyorktimes.svg";
+import wallstreetjournal from "@/images/mediaLogos/wallstreetjournal.svg";
+import forbes from "@/images/mediaLogos/forbes.svg";
+import bloomberg from "@/images/mediaLogos/bloomberg.svg";
+import americanlawyer from "@/images/mediaLogos/americanlawyer.svg";
+import legal500 from "@/images/mediaLogos/legal500.svg";
+import chambers from "@/images/mediaLogos/chambers.svg";
+import corporatecounsel from "@/images/mediaLogos/corporatecounsel.svg";
+import reuters from "@/images/mediaLogos/reuters.svg";
+import aba from "@/images/mediaLogos/aba.svg"; 
+// Fundations
+const mediaLogos = [
+  { src: newyorktimes, alt: "The New York Times" },
+  { src: wallstreetjournal, alt: "Wall Street Journal" },
+  { src: forbes, alt: "Forbes" },
+  { src: bloomberg, alt: "Bloomberg Law" },
+  { src: americanlawyer, alt: "American Lawyer" },
+  { src: legal500, alt: "Legal 500" },
+  { src: chambers, alt: "Chambers & Partners" },
+  { src: corporatecounsel, alt: "Corporate Counsel" },
+  { src: reuters, alt: "Reuters" },
+  { src: aba, alt: "ABA" }, 
+];
+---
+<div
+  class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 mt-12 lg:mt-24 gap-8"
+>
+  {
+    mediaLogos.map((logo) => (
+      <div class="md:bg-base-50  md:p-12 md:aspect-square md:items-center md:justify-center flex flex-col group">
+        <Image
+          src={logo.src}
+          alt={logo.alt}
+          class=" h-5 md:h-16 w-fit md:mx-auto md:group-hover:scale-120 transition-transform duration-300"
+        />
+      </div>
+    ))
+  }
+</div>

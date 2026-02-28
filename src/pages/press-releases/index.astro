@@ -1,0 +1,45 @@
+---
+// Fundations
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Text from "@/components/fundations/elements/Text.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+// Components
+import PressCard from "@/components/press/PressCard.astro";
+// Content
+import { getCollection } from "astro:content";
+const pressReleasesData = await getCollection("pressReleases");
+const pressReleases = pressReleasesData
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
+  .map((release) => ({
+    slug: release.slug,
+    data: release.data,
+  }));
+---
+
+<BaseLayout>
+  <section>
+    <Wrapper variant="standard" class="pb-12 pt-48">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-y-8 gap-x-12">
+        <div>
+          <div class="lg:sticky lg:top-48">
+            <Text
+              tag="h1"
+              variant="displayMD"
+              class="text-accent-800 font-display text-balance"
+            >
+              新聞稿
+            </Text>
+            <Text tag="p" variant="textSM" class="text-base-700 mt-2">
+              Stay informed with the latest news and announcements from
+              翰霖法律事務所. Our press releases highlight important
+              developments, achievements, and industry insights.
+            </Text>
+          </div>
+        </div>
+        <div class="lg:col-span-2 space-y-8">
+          {pressReleases.map((release) => <PressCard post={release} />)}
+        </div>
+      </div>
+    </Wrapper>
+  </section>
+</BaseLayout>

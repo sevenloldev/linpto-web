@@ -1,0 +1,20 @@
+---
+import { getCollection } from "astro:content";
+import PracticeLayout from "@/layouts/PracticeLayout.astro";
+export async function getStaticPaths() {
+  const practice = await getCollection("practice");
+  const paths = practice.map((page) => {
+    return {
+      params: { slug: page.slug },
+      props: { page },
+      trailingSlash: false,
+    };
+  });
+  return paths;
+}
+const { page } = Astro.props;
+const { Content } = await page.render();
+---
+<PracticeLayout frontmatter={page.data}>
+  <Content />
+</PracticeLayout>

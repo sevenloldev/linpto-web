@@ -1,0 +1,287 @@
+---
+// Assets
+import { Image } from "astro:assets";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+// Fundations
+import Text from "@/components/fundations/elements/Text.astro";
+import Button from "@/components/fundations/elements/Button.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+// Icons
+import Email from "@/components/fundations/icons/Email.astro";
+import Dollar from "@/components/fundations/icons/Dollar.astro";
+import Client from "@/components/fundations/icons/Client.astro";
+import Result from "@/components/fundations/icons/Result.astro";
+import Practice from "@/components/fundations/icons/Practice.astro";
+import Category from "@/components/fundations/icons/Category.astro";
+import Jurisdiction from "@/components/fundations/icons/Jurisdiction.astro";
+// Content
+import { getCollection } from "astro:content";
+const { frontmatter } = Astro.props;
+// Resolve attorneys to team entries for image + profile link
+const teamEntries = await getCollection("team");
+const slugify = (s: string) =>
+  s
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+const teamBySlug = Object.fromEntries(teamEntries.map((t) => [t.slug, t]));
+const teamByNameSlug = Object.fromEntries(
+  teamEntries.map((t) => [slugify(t.data.name), t])
+);
+const resolveAttorney = (id: string) =>
+  teamBySlug[id] || teamByNameSlug[id] || null;
+---
+
+<BaseLayout navTransparent={true}>
+  <section>
+    <Wrapper variant="paddingLess">
+      <div class="relative overflow-hidden">
+        <Image
+          src={frontmatter.image.url}
+          alt={frontmatter.image.alt}
+          width={1440}
+          height={900}
+          loading="eager"
+          decoding="async"
+          class="object-cover object-top w-full h-[60dvh] lg:h-[72dvh] bg-base-50"
+        />
+        <div
+          aria-hidden="true"
+          class="absolute inset-0 pointer-events-none bg-accent-950/70"
+        >
+        </div>
+      </div>
+    </Wrapper>
+    <Wrapper variant="standard" class="py-12">
+      <div class="grid grid-cols-1 lg:grid-cols-3 lg:items-end gap-y-4">
+        <div class="lg:col-span-2">
+          <Text
+            tag="p"
+            variant="textXS"
+            class="text-secondary-500 uppercase font-medium"
+          >
+            Published on {
+              new Date(frontmatter.pubDate).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })
+            }
+          </Text>
+          <Text
+            tag="h1"
+            variant="displayMD"
+            class="text-accent-800 font-display text-balance mt-12"
+          >
+            {frontmatter.title}
+          </Text>
+        </div>
+        <Text
+          tag="p"
+          variant="textSM"
+          class="text-base-600 leading-relaxed border-accent-500"
+        >
+          {frontmatter.summary}
+        </Text>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-3 mt-12 lg:mt-24 gap-8">
+        <div class="bg-base-50 p-8 flex flex-col">
+          <Client class="size-8 text-secondary-400" />
+          <Text
+            tag="h3"
+            variant="displaySM"
+            class="text-accent-800 font-display mt-12">Client</Text
+          >
+          <Text tag="p" variant="textSM" class="text-base-600 font-medium mt-2"
+            >{frontmatter.client}</Text
+          >
+        </div>
+        <div class="bg-base-50 p-8 flex flex-col">
+          <Practice class="size-8 text-secondary-400" />
+          <Text
+            tag="h3"
+            variant="displaySM"
+            class="text-accent-800 font-display mt-12">Practice</Text
+          >
+          <Text
+            tag="p"
+            variant="textSM"
+            class="text-base-600 font-medium mt-2 capitalize"
+            >{frontmatter.practice}</Text
+          >
+        </div>
+        <div class="bg-base-50 p-8 flex flex-col">
+          <Jurisdiction class="size-8 text-secondary-400" />
+          <Text
+            tag="h3"
+            variant="displaySM"
+            class="text-accent-800 font-display mt-12">Jurisdiction</Text
+          >
+          <Text tag="p" variant="textSM" class="text-base-600 font-medium mt-2"
+            >{frontmatter.jurisdiction}</Text
+          >
+        </div>
+        <div class="bg-base-50 p-8 flex flex-col">
+          <Dollar class="size-8 text-secondary-400" />
+          <Text
+            tag="h3"
+            variant="displaySM"
+            class="text-accent-800 font-display mt-12">Value</Text
+          >
+          <Text tag="p" variant="textSM" class="text-base-600 font-medium mt-2"
+            >{frontmatter.value}</Text
+          >
+        </div>
+        <div class="bg-base-50 p-8 flex flex-col">
+          <Result class="size-8 text-secondary-400" />
+          <Text
+            tag="h3"
+            variant="displaySM"
+            class="text-accent-800 font-display mt-12">Result</Text
+          >
+          <Text tag="p" variant="textSM" class="text-base-600 font-medium mt-2"
+            >{frontmatter.result}</Text
+          >
+        </div>
+        <div class="bg-base-50 p-8 flex flex-col">
+          <Category class="size-8 text-secondary-400" />
+          <Text
+            tag="h3"
+            variant="displaySM"
+            class="text-accent-800 font-display mt-12">Category</Text
+          >
+          <Text tag="p" variant="textSM" class="text-base-600 font-medium mt-2"
+            >{frontmatter.category}</Text
+          >
+        </div>
+      </div>
+    </Wrapper>
+    <Wrapper class="py-12 lg:py-24">
+      <div>
+        <div class="grid grid-cols-1 lg:grid-cols-4 items-start gap-y-8">
+          <Text
+            tag="p"
+            variant="textXS"
+            class="text-secondary-500 tracking-wide uppercase"
+          >
+            Meet the legal team
+          </Text>
+          <div class="lg:col-span-3">
+            <Text
+              tag="h2"
+              variant="displayLG"
+              class="text-accent-800 font-display text-balance"
+            >
+              Attorneys Involved
+            </Text>
+            <Text tag="p" variant="textLG" class="text-base-600 mt-4">
+              Our attorneys bring deep expertise and dedication to every case.
+              瞭解更多 about the professionals who guided this matter to a
+              successful resolution, each contributing specialized skills and
+              strategic insight to deliver results for our client.
+            </Text>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-12 lg:mt-24">
+          {
+            frontmatter.attorneys.map((id) => {
+              const atty = resolveAttorney(id);
+              if (!atty) {
+                return (
+                  <div class="bg-base-50 p-6 rounded">
+                    <Text tag="p" variant="textSM" class="text-base-700">
+                      {id}
+                    </Text>
+                  </div>
+                );
+              }
+              return (
+                <div class="grid grid-cols-1 lg:grid-cols-2">
+                  <Image
+                    height={400}
+                    width={400}
+                    src={atty.data.image.url}
+                    alt={atty.data.image.alt}
+                    loading="eager"
+                    decoding="async"
+                    class="object-cover"
+                  />
+                  <div class="p-8 bg-base-50 flex flex-col h-full justify-between">
+                    <div>
+                      <Text
+                        tag="h3"
+                        variant="displayXS"
+                        class="text-accent-800 font-display"
+                      >
+                        {atty.data.name}
+                      </Text>
+                      <Text tag="p" variant="textSM" class="text-base-700 mt-1">
+                        {atty.data.title}
+                      </Text>
+                      <Text tag="p" variant="textXS" class="text-base-600">
+                        {atty.data.contact.location}
+                      </Text>
+                      {atty.data.specialties &&
+                        atty.data.specialties.length > 0 && (
+                          <div class="flex flex-col gap-1 mt-4">
+                            {atty.data.specialties.slice(0, 3).map((s) => (
+                              <span class="text-accent-800 text-xs">{s}</span>
+                            ))}
+                          </div>
+                        )}
+                    </div>
+                    <div class="mt-4 flex flex-wrap gap-2">
+                      <Button
+                        size="xs"
+                        variant="muted"
+                        isLink={true}
+                        href={`mailto:${atty.data.contact.email}`}
+                        class="w-full lg:w-fit"
+                      >
+                        <Email slot="left-icon" size="base" />
+                      </Button>
+                      <Button
+                        size="xs"
+                        variant="muted"
+                        isLink={true}
+                        href={`/team/${atty.slug}`}
+                        class="w-full lg:w-fit"
+                      >
+                        View Profile
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              );
+            })
+          }
+        </div>
+      </div>
+      <div class="bg-accent-900 p-8 py-12 lg:py-24 text-center mt-12 lg:mt-24">
+        <Text
+          tag="p"
+          variant="textXS"
+          class="text-secondary-400 tracking-wide uppercase"
+        >
+          Client Testimonial
+        </Text>
+        <blockquote class="text-base-700 italic mt-12">
+          <Text
+            tag="h2"
+            variant="displayXL"
+            class="text-white font-display text-balance"
+          >
+            "{frontmatter.testimonial.quote}"</Text
+          >
+        </blockquote>
+        <cite class="text-base-400 text-sm mt-12 flex justify-center">
+          — {frontmatter.testimonial.name}
+        </cite>
+      </div>
+    </Wrapper>
+  </section>
+  <Wrapper class="py-12">
+    <Wrapper variant="prose" class="max-w-xl mx-auto"> <slot /></Wrapper>
+  </Wrapper>
+</BaseLayout>

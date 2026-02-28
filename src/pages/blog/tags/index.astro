@@ -1,0 +1,75 @@
+---
+// Fundations
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Text from "@/components/fundations/elements/Text.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+import { Image } from "astro:assets";
+// Content
+import { getCollection } from "astro:content";
+const allPosts = await getCollection("posts");
+const tags = [...new Set(allPosts.map((post) => post.data.tags).flat())];
+// Pick a representative image per tag (latest post with an image)
+const postsByDateDesc = [...allPosts].sort(
+  (a, b) =>
+    new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime()
+);
+const tagPreview = Object.fromEntries(
+  tags.map((tag) => {
+    const p = postsByDateDesc.find(
+      (post) => post.data.tags?.includes(tag) && post.data.image?.url
+    );
+    return [tag, p ?? null];
+  })
+);
+---
+
+<BaseLayout>
+  <section>
+    <Wrapper variant="standard" class="py-12 lg:py-48">
+      <Text
+        tag="h1"
+        variant="displayXL"
+        class="text-accent-800 font-display text-balance"
+      >
+        Tag directory</Text
+      >
+      <div class="grid grid-cols-1 lg:grid-cols-2 mt-12 lg:mt-24 gap-8">
+        {
+          tags.map((tag) => {
+            const preview = tagPreview[tag];
+            return (
+              <div class="relative flex flex-col gap-3">
+                <a
+                  href={`/blog/tags/${tag}`}
+                  aria-label={`View posts tagged ${tag}`}
+                  class="absolute inset-0 z-10"
+                ></a>
+                {preview && preview.data.image?.url ? (
+                  <Image
+                    width={800}
+                    height={450}
+                    src={preview.data.image.url}
+                    alt={
+                      preview.data.image.alt ||
+                      `Representative image for tag ${tag}`
+                    }
+                    class="object-cover object-top w-full h-100"
+                  />
+                ) : (
+                  <div class="w-full h-100 bg-base-100" aria-hidden="true" />
+                )}
+                <div
+                  class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"
+                  aria-hidden="true"
+                />
+                <span class="absolute left-3 bottom-3 inline-flex items-center bg-accent-900/20 p-4 text-white text-xs capitalize">
+                  {tag}
+                </span>
+              </div>
+            );
+          })
+        }
+      </div>
+    </Wrapper>
+  </section>
+</BaseLayout>

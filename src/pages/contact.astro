@@ -1,111 +1,272 @@
 ---
+// Fundations
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Text from "@/components/fundations/elements/Text.astro";
+import Button from "@/components/fundations/elements/Button.astro";
 import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+const contactInfo = [
+  {
+    label: "Phone",
+    value: "(555) 123-4567",
+    href: "tel:+15551234567",
+  },
+  {
+    label: "Email",
+    value: "carrington@example.com",
+    href: "mailto:carrington@example.com",
+  },
+  {
+    label: "Address",
+    value: "123 Legal Avenue, Suite 400\nNew York, NY 10001",
+    href: "#",
+  },
+];
+const officeLocations = [
+  {
+    name: "Main Office - New York",
+    address: "123 Legal Avenue, Suite 400",
+    city: "New York, NY 10001",
+    phone: "(555) 123-4567",
+    email: "ny@carringtonlaw.com",
+  },
+  {
+    name: "Branch Office - Los Angeles",
+    address: "456 Justice Boulevard, Floor 12",
+    city: "Los Angeles, CA 90210",
+    phone: "(555) 987-6543",
+    email: "la@carringtonlaw.com",
+  },
+];
+const businessHours = [
+  { day: "Monday - Friday", hours: "8:00 AM - 6:00 PM" },
+  { day: "Saturday", hours: "9:00 AM - 2:00 PM" },
+  { day: "Sunday", hours: "Closed" },
+];
 ---
 
-<BaseLayout title="聯絡我們" description="聯絡翰霖法律事務所：電話 02-2585-2626，地址台北市中正區重慶南路一段99號11樓之9，提供免費初步法律諮詢。">
+<BaseLayout>
   <section>
-    <Wrapper variant="standard" class="pt-8 pb-24">
-      <div class="max-w-xl">
-        <div class="overflow-hidden">
-          <Text
-            tag="h1"
-            variant="textXL"
-            data-aos="fade-up"
-            data-aos-duration="1000"
-            class="dark:text-white text-base-900"
-          >
-            聯絡我們
-          </Text>
-        </div>
-        <div class="overflow-hidden">
-          <Text
-            tag="p"
-            variant="textBase"
-            data-aos="fade-up"
-            data-aos-duration="1200"
-            class="mt-2 text-base-500 dark:text-base-300"
-          >
-            歡迎透過以下方式聯繫翰霖法律事務所，我們將盡速為您提供專業法律服務。
-          </Text>
-        </div>
-
-        <div class="mt-8 space-y-6">
-          <div class="p-6 bg-base-50 dark:bg-base-900">
-            <Text tag="h3" variant="textBase" class="dark:text-white text-base-900 font-medium">
-              電話
-            </Text>
-            <a
-              href="tel:02-25852626"
-              class="mt-2 text-lg text-accent-500 dark:text-accent-300 hover:text-accent-600 dark:hover:text-accent-200 duration-300 block"
+    <Wrapper variant="standard" class="pb-12 pt-48">
+      <div class="overflow-hidden grid grid-cols-1 lg:grid-cols-2">
+        <div class="p-8 h-full flex flex-col justify-start bg-base-50">
+          <div>
+            <Text
+              tag="h1"
+              variant="displayMD"
+              class="text-accent-800 font-display text-balance lg:col-span-2"
             >
-              02-2585-2626
-            </a>
-          </div>
-
-          <div class="p-6 bg-base-50 dark:bg-base-900">
-            <Text tag="h3" variant="textBase" class="dark:text-white text-base-900 font-medium">
-              傳真
+              聯絡我們
             </Text>
-            <Text tag="p" variant="textBase" class="mt-2 text-base-500 dark:text-base-400">
-              02-2596-3737
-            </Text>
-          </div>
-
-          <div class="p-6 bg-base-50 dark:bg-base-900">
-            <Text tag="h3" variant="textBase" class="dark:text-white text-base-900 font-medium">
-              事務所地址
-            </Text>
-            <Text tag="p" variant="textBase" class="mt-2 text-base-500 dark:text-base-400">
-              台北市中正區重慶南路一段99號11樓之9
-            </Text>
-            <Text tag="p" variant="textSM" class="mt-1 text-base-400 dark:text-base-500">
-              近捷運台大醫院站
-            </Text>
-          </div>
-
-          <div class="p-6 bg-base-50 dark:bg-base-900">
-            <Text tag="h3" variant="textBase" class="dark:text-white text-base-900 font-medium">
-              營業時間
-            </Text>
-            <div class="mt-2 space-y-1">
-              <div class="flex justify-between">
-                <Text tag="span" variant="textSM" class="text-base-500 dark:text-base-400">
-                  週一至週五
-                </Text>
-                <Text tag="span" variant="textSM" class="text-base-700 dark:text-base-300">
-                  09:00 – 18:00
-                </Text>
-              </div>
-              <div class="flex justify-between">
-                <Text tag="span" variant="textSM" class="text-base-500 dark:text-base-400">
-                  週六
-                </Text>
-                <Text tag="span" variant="textSM" class="text-base-700 dark:text-base-300">
-                  預約制
-                </Text>
-              </div>
-              <div class="flex justify-between">
-                <Text tag="span" variant="textSM" class="text-base-500 dark:text-base-400">
-                  週日及國定假日
-                </Text>
-                <Text tag="span" variant="textSM" class="text-base-700 dark:text-base-300">
-                  休息
-                </Text>
-              </div>
+            <div class="space-y-1 mt-8">
+              {
+                contactInfo.map((info) => (
+                  <div class="flex items-start space-x-3">
+                    <Text
+                      tag="p"
+                      variant="textSM"
+                      class="font-medium text-accent-800"
+                    >
+                      {info.label}
+                    </Text>
+                    {info.href !== "#" ? (
+                      <a
+                        href={info.href}
+                        class="text-secondary-600 hover:text-accent-800 transition-colors"
+                      >
+                        <Text tag="p" variant="textSM">
+                          {info.value}
+                        </Text>
+                      </a>
+                    ) : (
+                      <Text tag="p" variant="textSM" class="text-base-600">
+                        {info.value
+                          .split("\n")
+                          .map((line) => line.trim())
+                          .join(", ")}
+                      </Text>
+                    )}
+                  </div>
+                ))
+              }
             </div>
           </div>
-
-          <div class="p-6 bg-accent-50 dark:bg-accent-950">
-            <Text tag="h3" variant="textBase" class="dark:text-white text-base-900 font-medium">
-              免費初步諮詢
+          <div class="mt-8 pt-8 border-t border-base-200">
+            <Text
+              tag="h3"
+              variant="textXL"
+              class="font-display text-accent-800 mb-3"
+            >
+              Business Hours
             </Text>
-            <Text tag="p" variant="textSM" class="mt-2 text-base-500 dark:text-base-400">
-              翰霖法律事務所提供免費初步電話諮詢服務。如需進一步面談，
-              歡迎來電預約，我們將安排專業律師為您服務。
-            </Text>
+            <div class="space-y-2 mt-8">
+              {
+                businessHours.map((schedule) => (
+                  <div class="flex justify-between text-sm">
+                    <span class="text-accent-800">{schedule.day}</span>
+                    <span class="text-base-600">{schedule.hours}</span>
+                  </div>
+                ))
+              }
+            </div>
           </div>
+        </div>
+        <form class="space-y-4 p-8 bg-accent-900">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="space-y-1">
+              <label
+                for="firstName"
+                class="block text-xs font-medium text-base-300"
+              >
+                First Name *
+              </label>
+              <input
+                type="text"
+                id="firstName"
+                name="firstName"
+                required
+                class="w-full px-3 py-2 border-b border-transparent h-12 bg-white/5 focus:outline-none focus:bg-white/8 text-white text-xs focus:ring-0"
+              />
+            </div>
+            <div class="space-y-1">
+              <label
+                for="lastName"
+                class="block text-xs font-medium text-base-300"
+              >
+                Last Name *
+              </label>
+              <input
+                type="text"
+                id="lastName"
+                name="lastName"
+                required
+                class="w-full px-3 py-2 border-b border-transparent h-12 bg-white/5 focus:outline-none focus:bg-white/8 text-white text-xs focus:ring-0"
+              />
+            </div>
+          </div>
+          <div class="space-y-1">
+            <label for="email" class="block text-xs font-medium text-base-300">
+              Email Address *
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              class="w-full px-3 py-2 border-b border-transparent h-12 bg-white/5 focus:outline-none focus:bg-white/8 text-white text-xs focus:ring-0"
+            />
+          </div>
+          <div class="space-y-1">
+            <label for="phone" class="block text-xs font-medium text-base-300">
+              電話號碼
+            </label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              class="w-full px-3 py-2 border-b border-transparent h-12 bg-white/5 focus:outline-none focus:bg-white/8 text-white text-xs focus:ring-0"
+            />
+          </div>
+          <div class="space-y-1">
+            <label
+              for="practiceArea"
+              class="block text-xs font-medium text-base-300"
+            >
+              Practice Area
+            </label>
+            <select
+              id="practiceArea"
+              name="practiceArea"
+              class="w-full px-3 py-2 border-b border-transparent h-12 bg-white/5 focus:outline-none focus:bg-white/8 text-white text-xs focus:ring-0"
+            >
+              <option value="">Select a practice area</option>
+              <option value="corporate">Corporate Law</option>
+              <option value="criminal">Criminal Defense</option>
+              <option value="family">Family Law</option>
+              <option value="personal-injury">Personal Injury</option>
+              <option value="real-estate">Real Estate</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="space-y-1">
+            <label
+              for="message"
+              class="block text-xs font-medium text-base-300"
+            >
+              Message *
+            </label>
+            <textarea
+              id="message"
+              name="message"
+              rows="5"
+              required
+              placeholder="Please describe your legal matter..."
+              class="w-full px-3 py-2 border-b border-transparent bg-white/5 focus:outline-none focus:bg-white/8 text-white text-xs focus:ring-0"
+            ></textarea>
+          </div>
+
+          <Button variant="muted" size="sm" type="submit" class="w-full">
+            Send Message
+          </Button>
+        </form>
+      </div>
+    </Wrapper>
+    <Wrapper variant="standard" class="py-12">
+      <div>
+        <Text
+          tag="h2"
+          variant="displayMD"
+          class="text-accent-800 font-display text-balance"
+        >
+          Our 據點資訊
+        </Text>
+        <div class="grid grid-cols-1 lg:grid-cols-2 mt-12 gap-8">
+          {
+            officeLocations.map((office) => (
+              <div class="bg-base-50   gap-8">
+                <div class="p-8">
+                  <Text
+                    tag="h3"
+                    variant="displaySM"
+                    class="text-accent-800 font-display"
+                  >
+                    {office.name}
+                  </Text>
+                  <div class="space-y-1 text-sm text-base-700 mt-8">
+                    <Text tag="p" variant="textXS">
+                      {office.address}
+                    </Text>
+                    <Text tag="p" variant="textXS">
+                      {office.city}
+                    </Text>
+                    <a
+                      href={`tel:${office.phone}`}
+                      class="text-secondary-500 hover:text-accent-80 transition-colors text-xs block"
+                    >
+                      {office.phone}
+                    </a>
+                    <a
+                      href={`mailto:${office.email}`}
+                      class="text-secondary-500 hover:text-accent-800 transition-colors text-xs block"
+                    >
+                      {office.email}
+                    </a>
+                  </div>
+                </div>
+                <div class="aspect-video  overflow-hidden">
+                  <iframe
+                    src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3024.221990489111!2d-74.00369368459375!3d40.713129579331854!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a316ba4bf83%3A0xbae5cb597764b!2s${encodeURIComponent(office.address + ", " + office.city)}!5e0!3m2!1sen!2sus!4v1696871234567!5m2!1sen!2sus`}
+                    width="100%"
+                    height="100%"
+                    style="border:0;"
+                    allowfullscreen=""
+                    loading="eager"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    title={`Map of ${office.name}`}
+                  />
+                </div>
+              </div>
+            ))
+          }
         </div>
       </div>
     </Wrapper>

@@ -1,0 +1,42 @@
+---
+// Fundations
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Text from "@/components/fundations/elements/Text.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+// Components
+import PracticeCard from "@/components/practices/PracticeCard.astro";
+// Content
+import { getCollection } from "astro:content";
+const allPractices = await getCollection("practice");
+---
+
+<BaseLayout>
+  <section>
+    <Wrapper variant="standard" class="pb-12 pt-48">
+      <div class="max-w-xl">
+        <Text
+          tag="h1"
+          variant="displayLG"
+          class="text-accent-800 font-display text-balance"
+        >
+          專業領域
+        </Text>
+        <Text
+          tag="p"
+          variant="textSM"
+          class="text-base-600 leading-relaxed border-accent-500 mt-2"
+        >
+          Explore our comprehensive range of legal services designed to meet the
+          diverse needs of our clients. From corporate law and litigation to
+          family matters and intellectual property, our experienced attorneys
+          deliver strategic solutions and dedicated advocacy across every
+          practice area.
+        </Text>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 mt-12 lg:mt-24 gap-8">
+        {allPractices.map((practice) => <PracticeCard post={practice} />)}
+      </div>
+    </Wrapper>
+  </section>
+</BaseLayout>

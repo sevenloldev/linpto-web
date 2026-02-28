@@ -1,50 +1,41 @@
 ---
+// Fundations
 import "@/styles/global.css";
 import BaseHead from "@/components/fundations/head/BaseHead.astro";
+// Components
 import Footer from "@/components/global/Footer.astro";
-import DesktopNav from "@/components/navigation/DesktopNav.astro";
-import MobileNav from "@/components/navigation/MobileNav.astro";
-import ToggleLocalStorage from "@/components/fundations/scripts/ToggleLocalStorage.astro";
 
-interface Props {
-  title?: string;
-  description?: string;
-}
-
-const { title, description } = Astro.props;
+import Navigation from "@/components/global/Navigation.astro";
+// Hides the big logo, navigation, or footer on selected screens by passing props:
+// <BaseLayout hideFooter={true}>
+// Control transparent nav per page with:
+// <BaseLayout navTransparent={true}>
+const {
+  hideNavigation = false,
+  hideFooter = false,
+  navTransparent,
+} = Astro.props as {
+  hideNavigation?: boolean;
+  hideFooter?: boolean;
+  navTransparent?: boolean;
+};
 ---
 
 <html lang="zh-Hant" class="scroll-smooth">
   <head>
-    <BaseHead title={title} description={description} />
+    <BaseHead />
   </head>
-  <body class="dark:bg-base-950 bg-white">
-    <div class="min-h-[640px] flex flex-col">
-      <div>
-        <DesktopNav />
-        <div class="relative z-0 flex flex-1 overflow-hidden">
-          <div
-            class="relative z-0 flex-1 overflow-y-auto focus:outline-none lg:pl-64 2xl:pl-64"
-          >
-            <MobileNav />
-            <div class="flex-1 mx-auto min-h-svh flex flex-col">
-              <main class="grow">
-                <slot />
-              </main>
-              <Footer />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <script
-      type="text/javascript"
-      src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script type="text/javascript">
-      AOS.init({
-        once: true,
-      });
-    </script>
-    <ToggleLocalStorage />
+  <body class="flex flex-col bg-white lg:min-h-svh">
+    {
+      !hideNavigation &&
+        (navTransparent !== undefined ? (
+          <Navigation transparent={navTransparent} />
+        ) : (
+          <Navigation />
+        ))
+    }
+    <main class="grow"><slot /></main>
+    {!hideFooter && <Footer />}
+
   </body>
 </html>

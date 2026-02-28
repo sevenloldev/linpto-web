@@ -1,0 +1,36 @@
+---
+// Assets
+import { Image } from "astro:assets";
+import aba from "@/images/mediaLogos/aba.svg";
+import nysba from "@/images/mediaLogos/nysba.svg";
+import csba from "@/images/mediaLogos/csba.svg";
+import corporatecounsel from "@/images/mediaLogos/corporatecounsel.svg";
+import dri from "@/images/mediaLogos/dri.svg";
+import iba from "@/images/mediaLogos/iba.svg";
+
+// Fundations
+const mediaLogos = [
+  { src: aba, alt: "American Bar Association" },
+  { src: nysba, alt: "New York State Bar Association" },
+  { src: csba, alt: "California State Bar Association" },
+  { src: corporatecounsel, alt: "Corporate Counsel" },
+  { src: dri, alt: "Defense Research Institute" },
+  { src: iba, alt: "International Bar Association" },
+];
+---
+
+<div
+  class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 mt-12 lg:mt-24 gap-8"
+>
+  {
+    mediaLogos.map((logo) => (
+      <div class="md:bg-base-50  md:p-12 md:aspect-square md:items-center md:justify-center flex flex-col group">
+        <Image
+          src={logo.src}
+          alt={logo.alt}
+          class=" h-5 md:h-16 w-fit md:mx-auto md:group-hover:scale-120 transition-transform duration-300"
+        />
+      </div>
+    ))
+  }
+</div>

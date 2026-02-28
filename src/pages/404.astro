@@ -1,31 +1,144 @@
 ---
+// Fundations
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Text from "@/components/fundations/elements/Text.astro";
 import Button from "@/components/fundations/elements/Button.astro";
 import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+// Content
+// Recent cases (latest 3)
+const casesData = await getCollection("cases");
+const recentCases = casesData
+  .slice()
+  .sort(
+    (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+  )
+  .slice(0, 3)
+  .map((c) => ({ label: c.data.title, href: `/cases/${c.slug}` }));
+import { getCollection } from "astro:content";
+
+// Helpful links
+const practiceAreasData = await getCollection("practice");
+const postsData = await getCollection("posts");
+
+const linkSections = [
+  {
+    title: "Popular links",
+    items: [
+      { label: "專業領域", href: "/practice-areas" },
+      { label: "Cases", href: "/cases" },
+      { label: "律師團隊", href: "/team" },
+      { label: "據點資訊", href: "/offices" },
+      { label: "Contact", href: "/contact" },
+      { label: "免費法律諮詢", href: "/free-consultation" },
+    ],
+  },
+  {
+    title: "Practice areas",
+    items: practiceAreasData
+      .sort((a, b) => a.data.title.localeCompare(b.data.title))
+      .slice(0, 6)
+      .map((p) => ({ label: p.data.title, href: `/practice-areas/${p.slug}` })),
+  },
+  {
+    title: "Recent insights",
+    items: postsData
+      .slice()
+      .sort(
+        (a, b) =>
+          new Date(b.data.pubDate).getTime() -
+          new Date(a.data.pubDate).getTime()
+      )
+      .slice(0, 3)
+      .map((p) => ({ label: p.data.title, href: `/blog/posts/${p.slug}` })),
+  },
+  {
+    title: "Recent cases",
+    items: recentCases,
+  },
+];
 ---
 
-<BaseLayout title="找不到頁面">
+<BaseLayout>
   <section>
-    <Wrapper variant="standard" class="py-24">
-      <div class="max-w-sm mx-auto text-center">
-        <Text
-          tag="h1"
-          variant="display2XL"
-          class="dark:text-white text-base-900"
+    <Wrapper variant="standard" class="pb-12 pt-48">
+      <Text
+        tag="h1"
+        variant="displayXL"
+        class="text-accent-800 font-display text-balance lg:col-span-2"
+      >
+        404 - Page Not Found
+      </Text>
+      <Text
+        tag="p"
+        variant="textBase"
+        class="text-base-600 leading-relaxed mb-6"
+      >
+        Sorry, the page you’re looking for doesn’t exist or has been moved.<br
+        />
+        Here are some helpful links to get you back on track:
+      </Text>
+      <Button
+        isLink={true}
+        href="/"
+        variant="muted"
+        size="xs"
+        class="w-full lg:w-fit"
+      >
+        Go back home
+      </Button>
+
+      <div
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-8 mt-12 lg:mt-24 lg:divide-x lg:divide-base-100 lg:border-x lg:border-base-100"
+      >
+        {
+          linkSections.map((section) => (
+            <div class="lg:px-4">
+              <Text
+                tag="h2"
+                variant="textSM"
+                class="text-accent-800 font-medium"
+              >
+                {section.title}
+              </Text>
+              <ul class="flex flex-col gap-1 mt-8">
+                {section.items.map((item) => (
+                  <li>
+                    <a
+                      href={item.href}
+                      class="text-base-700 hover:text-accent-800 text-xs"
+                    >
+                      {item.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+
+      <div class="bg-base-50 p-8 lg:p-12 mt-12 lg:mt-24">
+        <div
+          class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6"
         >
-          404
-        </Text>
-        <Text
-          tag="p"
-          variant="textBase"
-          class="mt-4 text-base-500 dark:text-base-400"
-        >
-          很抱歉，您所訪問的頁面不存在。
-        </Text>
-        <div class="mt-8">
-          <Button isLink size="base" variant="default" href="/">
-            返回首頁
+          <div>
+            <Text
+              tag="h3"
+              variant="displaySM"
+              class="text-accent-800 font-display"
+            >
+              Still stuck? Reach out and we’ll point you in the right direction.
+            </Text>
+          </div>
+
+          <Button
+            isLink={true}
+            href="/contact"
+            variant="default"
+            size="sm"
+            class="w-full lg:w-fit"
+          >
+            聯絡我們
           </Button>
         </div>
       </div>

@@ -1,55 +1,46 @@
 ---
+// Fundations
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Text from "@/components/fundations/elements/Text.astro";
 import Wrapper from "@/components/fundations/containers/Wrapper.astro";
-import CaseCard from "@/components/cases/CaseCard.astro";
+// Components
+import CasesCard from "@/components/cases/CasesCard.astro";
+// Content
 import { getCollection } from "astro:content";
-
 const allCases = await getCollection("cases");
 allCases.sort((a, b) => {
-  return new Date(b.data.date).getTime() - new Date(a.data.date).getTime();
+  const dateA = new Date(a.data.pubDate).getTime();
+  const dateB = new Date(b.data.pubDate).getTime();
+  return dateB - dateA; // Most recent first
 });
 ---
 
-<BaseLayout title="實務案例" description="翰霖法律事務所精選實務案例，展示我們在各法律領域的專業成果與經驗。">
+<BaseLayout>
   <section>
-    <Wrapper variant="standard" class="pt-8 pb-12">
-      <div class="max-w-xl overflow-hidden">
+    <Wrapper variant="standard" class="pb-12 pt-48">
+      <div class="max-w-xl">
         <Text
           tag="h1"
-          variant="textXL"
-          data-aos="fade-up"
-          data-aos-duration="1000"
-          class="dark:text-white text-base-900 text-balance"
+          variant="displayLG"
+          class="text-accent-800 font-display text-balance"
         >
-          實務案例
+          Cases
+        </Text>
+        <Text
+          tag="p"
+          variant="textSM"
+          class="text-base-600 leading-relaxed border-accent-500 mt-2"
+        >
+          Explore a selection of our recent cases to see how 翰霖法律事務所
+          delivers results for clients facing complex legal challenges. Each
+          case reflects our commitment to strategic advocacy, thorough
+          preparation, and achieving outcomes that matter. Discover the stories
+          behind our work and the impact we make across industries.
         </Text>
       </div>
-      <Text
-        tag="p"
-        variant="textBase"
-        data-aos="fade-up"
-        data-aos-duration="1200"
-        class="mt-2 text-base-500 dark:text-base-300 max-w-lg"
-      >
-        以下為本所曾處理之代表性案件摘要。基於保密義務，相關當事人資訊均已隱匿處理。
-      </Text>
-    </Wrapper>
-  </section>
-  <section>
-    <Wrapper class="pb-24">
-      <div
-        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-1 pt-4 relative before:absolute after:absolute before:bg-black after:bg-base-200 dark:before:bg-base-50 dark:after:bg-base-50/10 before:top-0 before:left-0 before:h-px before:w-18 after:top-0 after:right-0 after:left-20 after:h-px"
-      >
-        {allCases.map((c) => (
-          <CaseCard
-            title={c.data.title}
-            category={c.data.category}
-            summary={c.data.summary}
-            status={c.data.status}
-            url={`/cases/${c.slug}`}
-          />
-        ))}
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 mt-12 lg:mt-24 gap-8">
+        {allCases.map((caseItem) => <CasesCard post={caseItem} />)}
       </div>
     </Wrapper>
   </section>

@@ -1,0 +1,92 @@
+---
+// Fundations
+import Text from "@/components/fundations/elements/Text.astro";
+import Button from "@/components/fundations/elements/Button.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+// Components
+import TeamCard from "@/components/team/TeamCard.astro";
+// Content
+import { getCollection } from "astro:content";
+
+const allTeamMembers = await getCollection("team");
+
+// Select first 4 attorneys to feature
+
+const teamCount = allTeamMembers.length;
+---
+
+<section>
+  <Wrapper variant="standard" class="py-24">
+    <div class="grid grid-cols-1 lg:grid-cols-4 items-start gap-y-8">
+      <Text
+        tag="p"
+        variant="textXS"
+        class="text-secondary-500 tracking-wide uppercase"
+      >
+        The team
+      </Text>
+      <div class="lg:col-span-3">
+        <Text
+          tag="h2"
+          variant="displayLG"
+          class="text-accent-800 font-display text-balance lg:col-span-2"
+        >
+          律師團隊
+        </Text>
+        <Text tag="p" variant="textLG" class="text-base-600 mt-4">
+          Meet our experienced attorneys who are dedicated to providing
+          exceptional legal representation and building lasting relationships
+          with our clients.
+        </Text>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 mt-12 lg:mt-24 gap-8">
+      {
+        allTeamMembers
+          .slice(0, 2)
+          .map((attorney) => <TeamCard post={attorney} />)
+      }
+    </div>
+    <div class="bg-base-50 p-8 lg:p-12 mt-8">
+      <div
+        class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6"
+      >
+        <div>
+          <Text
+            tag="h3"
+            variant="displaySM"
+            class="text-accent-800 font-display"
+          >
+            Meet the full team
+          </Text>
+          <Text tag="p" variant="textSM" class="text-base-600 mt-1">
+            Get to know our {teamCount}+ attorneys and their areas of focus.
+          </Text>
+        </div>
+        <div
+          class="flex flex-col lg:flex-row w-full lg:w-fit items-center gap-2"
+        >
+          <Button
+            isLink={true}
+            href="/team"
+            variant="default"
+            size="sm"
+            class="w-full lg:w-fit"
+          >
+            Meet all attorneys
+          </Button>
+          <Button
+            isLink={true}
+            variant="muted"
+            size="sm"
+            href="/careers"
+            class="w-full lg:w-fit"
+          >
+            人才招募
+          </Button>
+        </div>
+      </div>
+    </div>
+  </Wrapper>
+</section>

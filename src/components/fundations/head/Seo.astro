@@ -1,44 +1,31 @@
 ---
 import { AstroSeo } from "@astrolib/seo";
-
-interface Props {
-  title?: string;
-  description?: string;
-}
-
-const SITE_NAME = "翰霖法律事務所";
-const SITE_URL = "https://linpto.com.tw";
-const DEFAULT_DESCRIPTION =
-  "翰霖法律事務所｜台北專業律師團隊，提供民事訴訟、刑事辯護、企業法務、智慧財產權、不動產法律、家事法律等全方位法律服務。";
-
-const { title, description = DEFAULT_DESCRIPTION } = Astro.props;
-
-const pageTitle = title ? `${title} | ${SITE_NAME}` : SITE_NAME;
-const canonicalUrl = new URL(Astro.url.pathname, SITE_URL).href;
 ---
 
 <AstroSeo
-  title={pageTitle}
-  description={description}
-  canonical={canonicalUrl}
+  title="Your Page Title"
+  description="A detailed description of your page content."
+  canonical="https://yourwebsite.com/current-page"
   openGraph={{
-    url: canonicalUrl,
-    title: pageTitle,
-    description: description,
+    url: "https://yourwebsite.com/current-page",
+    title: "Your Page Title",
+    description: "A detailed description of your page content.",
     images: [
       {
-        url: `${SITE_URL}/og-image.jpg`,
+        url: "https://yourwebsite.com/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "翰霖法律事務所",
+        alt: "Open Graph Image Alt",
         type: "image/jpeg",
       },
     ],
-    site_name: SITE_NAME,
+    site_name: "Your Site Name",
     type: "website",
-    locale: "zh_TW",
+    locale: "en_US",
+  }}
+  twitter={{
+    handle: "@yourhandle",
+    site: "@yourwebsite",
+    cardType: "summary_large_image",
   }}
 />
-
-<meta name="robots" content="index, follow" />
-<meta name="googlebot" content="index, follow" />

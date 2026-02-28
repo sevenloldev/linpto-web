@@ -1,0 +1,87 @@
+---
+// Assets
+import { Image } from "astro:assets";
+import HeroImage from "@/images/assets/heroImage.png";
+// Fundations
+import Text from "@/components/fundations/elements/Text.astro";
+import Button from "@/components/fundations/elements/Button.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+---
+
+<section>
+  <Wrapper variant="standard" class="py-24">
+    <div class="overflow-hidden grid grid-cols-1 lg:grid-cols-2 bg-base-50">
+      <div
+        class="h-full max-w-xl flex flex-col justify-between lg:gap-70 relative p-8 lg:px-12"
+      >
+        <div>
+          <Text
+            tag="h2"
+            variant="displayMD"
+            class="text-accent-800 font-display"
+          >
+            Take the first step toward trusted legal solutions
+          </Text>
+
+          <Text
+            tag="p"
+            variant="textSM"
+            class="text-base-700 leading-relaxed mt-4"
+          >
+            Don't let legal challenges hold you back. Our experienced attorneys
+            are here to provide the guidance and representation you need.
+            Schedule your free consultation today.
+          </Text>
+
+          <div class="flex flex-col sm:flex-row gap-2 items-center mt-12">
+            <Button
+              variant="default"
+              size="xs"
+              isLink={true}
+              href="/free-consultation"
+              class="w-full lg:w-fit"
+            >
+              Schedule free consultation
+            </Button>
+
+            <Button
+              variant="muted"
+              size="xs"
+              isLink={true}
+              href="/contact"
+              class="w-full lg:w-fit"
+            >
+              聯絡我們
+            </Button>
+          </div>
+
+          <Text tag="p" variant="textXS" class="text-base-700 mt-4">
+            No obligation • Confidential • Professional guidance
+          </Text>
+        </div>
+        <div class="mt-8 text-xs mt-4 pt-4 border-t border-base-200">
+          <a
+            href="tel:(555) 123-4567"
+            class="text-accent-700 hover:text-accent-900 font-semibold"
+            >Call (555) 123-4567</a
+          >
+          or
+          <a
+            href="mailto:info@carringtonlaw.com"
+            class="text-accent-700 hover:text-accent-900 font-semibold"
+            >info@carringtonlaw.com</a
+          >
+        </div>
+      </div>
+      <Image
+        src={HeroImage}
+        width={1440}
+        height={900}
+        alt="翰霖法律事務所 - Professional Legal Services"
+        class="object-cover object-center size-full"
+        loading="eager"
+        decoding="async"
+      />
+    </div>
+  </Wrapper>
+</section>

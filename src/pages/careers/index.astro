@@ -1,0 +1,129 @@
+---
+// Assets
+import { Image } from "astro:assets";
+import HeroImage from "@/images/assets/careers.jpg";
+// Fundations
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Text from "@/components/fundations/elements/Text.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+// Components
+import CareerCard from "@/components/careers/CareerCard.astro";
+// Content
+import { getCollection } from "astro:content";
+const all人才招募 = await getCollection("careers");
+// Sort by most recent first
+all人才招募.sort((a, b) => {
+  const dateA = new Date(a.data.postedDate).getTime();
+  const dateB = new Date(b.data.postedDate).getTime();
+  return dateB - dateA;
+});
+// Choose how to separate listings: 'type' or 'location'
+const groupBy: 'type' | 'location' = 'type';
+// Preferred order for type grouping
+const typeOrder = ["Full-time", "Part-time", "Contract", "Internship", "Other"];
+const getGroupKey = (c) => (c.data[groupBy] ?? "Other");
+const groupKeys = Array.from(new Set(all人才招募.map(getGroupKey))).sort((a, b) => {
+  if (groupBy === 'type') {
+    const ia = typeOrder.indexOf(a);
+    const ib = typeOrder.indexOf(b);
+    if (ia === -1 && ib === -1) return String(a).localeCompare(String(b));
+    if (ia === -1) return 1;
+    if (ib === -1) return -1;
+    return ia - ib;
+  }
+  // Alphabetical for locations
+  return String(a).localeCompare(String(b));
+});
+const careersByGroup = Object.fromEntries(
+  groupKeys.map((k) => [k, all人才招募.filter((c) => getGroupKey(c) === k)])
+);
+---
+
+<BaseLayout navTransparent={true}>
+  <section>
+    <Wrapper variant="paddingLess">
+      <div class="relative overflow-hidden">
+        <Image
+          src={HeroImage}
+          width={1440}
+          height={900}
+          loading="eager"
+          decoding="async"
+          alt="翰霖法律事務所 - Professional Legal Services"
+          class="object-cover object-top w-full h-[60dvh] lg:h-[72dvh] bg-base-50"
+        />
+        <div
+          aria-hidden="true"
+          class="absolute inset-0 pointer-events-none bg-accent-950/70"
+        >
+        </div>
+      </div>
+    </Wrapper>
+    <Wrapper variant="standard" class="py-12">
+      <div class="grid grid-cols-1 lg:grid-cols-3 lg:items-end gap-y-4">
+        <Text
+          tag="h1"
+          variant="displayXL"
+          class="text-accent-800 font-display text-balance lg:col-span-2"
+        >
+          Build your career with purpose at 翰霖法律事務所.
+        </Text>
+        <Text
+          tag="p"
+          variant="textSM"
+          class="text-base-600 leading-relaxed border-accent-500"
+        >
+          Join a team where your expertise shapes the future of legal practice.
+          At 翰霖法律事務所, we foster growth, collaboration, and
+          innovation—empowering our people to make a real impact for clients and
+          communities. Discover opportunities to advance your career, work
+          alongside respected professionals, and contribute to meaningful cases
+          that matter.
+        </Text>
+      </div>
+    </Wrapper>
+    <Wrapper variant="standard" class="py-12 lg:py-24">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-y-8 gap-x-12">
+        <div>
+          <div class="lg:sticky lg:top-48">
+            <Text
+              tag="h1"
+              variant="displayMD"
+              class="text-accent-800 font-display text-balance"
+            >
+              All open positions
+            </Text>
+            <Text tag="p" variant="textSM" class="text-base-700 mt-2">
+              Explore our current openings and find the role that fits your
+              ambitions. We offer opportunities for legal professionals, support
+              staff, and interns to grow and thrive in a collaborative,
+              client-focused environment.
+              
+              <br>
+              <br>
+              Every position at 翰霖法律事務所 is
+              designed to challenge, inspire, and reward your commitment to
+              excellence.
+            </Text>
+          </div>
+        </div>
+        <div class="lg:col-span-2 space-y-12 lg:space-y-24">
+          {
+            groupKeys.map((key) => (
+              <>
+               <div>
+                  <Text tag="h2" variant="textXL" class="text-accent-800 font-display">
+                    {key}
+                  </Text>
+                  <div class="space-y-8 mt-4">
+                    {careersByGroup[key].map((career) => <CareerCard post={career} />)}
+                  </div>
+               </div>
+              </>
+            ))
+          }
+        </div>
+      </div>
+    </Wrapper>
+  </section>
+</BaseLayout>

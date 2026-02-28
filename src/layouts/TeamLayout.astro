@@ -1,0 +1,153 @@
+---
+// Assets
+import { Image } from "astro:assets";
+// Fundations
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Text from "@/components/fundations/elements/Text.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+// Icons
+import LinkIcon from "@/components/fundations/icons/Link.astro";
+import Twitter from "@/components/fundations/icons/Twitter.astro";
+import Linkedin from "@/components/fundations/icons/Linkedin.astro";
+// Content
+const { frontmatter } = Astro.props;
+---
+
+<BaseLayout>
+  <section>
+    <Wrapper variant="standard" class="py-24 lg:pt-48">
+      <div class="grid grid-cols-1 lg:grid-cols-2">
+        <Image
+          alt={frontmatter.image.alt}
+          src={frontmatter.image.url}
+          width={800}
+          height={1200}
+          loading="eager"
+          decoding="async"
+          class="object-cover w-full h-ful object-top h-80 lg:h-full"
+        />
+        <div class="bg-base-50 p-8 lg:p-20 flex flex-col justify-between">
+          <div>
+            <Text tag="p" variant="textXS" class="text-secondary-500 uppercase">
+              {frontmatter.title}
+            </Text>
+            <Text
+              tag="h1"
+              variant="displayLG"
+              class="text-accent-800 font-display mt-12"
+            >
+              {frontmatter.name}
+            </Text>
+            <div class="space-y-2 mt-4">
+              <Text tag="p" variant="textSM" class="text-base-700"
+                >{frontmatter.bio}
+              </Text>
+              <Text tag="p" variant="textSM" class="text-base-700"
+                >{frontmatter.experience}</Text
+              >
+            </div>
+            <div class="mt-8">
+              <Text
+                tag="h2"
+                variant="textBase"
+                class="text-accent-800 font-medium">專業領域</Text
+              >
+              <div class="flex flex-col gap-2 mt-2 text-accent-700 text-xs">
+                {
+                  frontmatter.specialties.map((specialty) => (
+                    <Text tag="p" variant="textXS" class="text-base-700">
+                      {specialty}
+                    </Text>
+                  ))
+                }
+              </div>
+            </div>
+            <div class="mt-8">
+              <Text
+                tag="h2"
+                variant="textBase"
+                class="text-accent-800 font-medium">Education</Text
+              >
+              <ul class="list-none space-y-2 text-base-700 mt-4">
+                {
+                  frontmatter.education.map((edu) => (
+                    <li>
+                      <Text tag="p" variant="textXS" class="text-base-700">
+                        {edu}
+                      </Text>
+                    </li>
+                  ))
+                }
+              </ul>
+            </div>
+            <div class="mt-8">
+              <Text
+                tag="h2"
+                variant="textBase"
+                class="text-accent-800 font-medium"
+              >
+                Bar Admissions
+              </Text>
+              <ul class="list-none space-y-2 text-base-700 mt-4">
+                {
+                  frontmatter.barAdmissions.map((bar) => (
+                    <li>
+                      <Text tag="p" variant="textXS" class="text-base-700">
+                        {bar}
+                      </Text>
+                    </li>
+                  ))
+                }
+              </ul>
+            </div>
+            <div
+              class="flex flex-col gap-2 text-xs text-base-600 mt-4 pt-4 border-t border-base-200"
+            >
+              <a
+                href={`mailto:${frontmatter.contact.email}`}
+                class="hover:text-accent-800"
+              >
+                {frontmatter.contact.email}
+              </a>
+              <span class="block">{frontmatter.contact.phone}</span>
+              <span class="block">{frontmatter.contact.location}</span>
+            </div>
+          </div>
+          <div class="mt-12">
+            <Text tag="h3" variant="textSM" class="font-medium text-accent-800"
+              >Connect</Text
+            >
+            <div
+              class="mt-2 pt-2 border-t border-base-100 flex flex-wrap gap-2 text-secondary-500"
+            >
+              <a
+                href={frontmatter.socials.linkedin}
+                target="_blank"
+                class="hover:text-accent-800"
+              >
+                <Linkedin class="size-6" />
+              </a>
+              <a
+                href={frontmatter.socials.twitter}
+                target="_blank"
+                class="hover:text-accent-800"
+              >
+                <Twitter class="size-6" />
+              </a>
+              <a
+                href={frontmatter.socials.website}
+                target="_blank"
+                class="hover:text-accent-800"
+              >
+                <LinkIcon class="size-6" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <Wrapper variant="prose" class="max-w-xl mx-auto mt-12">
+        <slot />
+      </Wrapper>
+    </Wrapper>
+  </section>
+</BaseLayout>

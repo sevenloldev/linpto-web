@@ -1,0 +1,104 @@
+---
+// Fundations
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Text from "@/components/fundations/elements/Text.astro";
+import Button from "@/components/fundations/elements/Button.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+// Icons
+import Plus from "@/components/fundations/icons/Plus.astro";
+const faqs = [
+  {
+    question: "How much do your legal services cost?",
+    answer:
+      "Our fees vary depending on the complexity of your case and the type of legal service required. We offer free initial consultations to discuss your needs and provide a clear fee structure. We also offer flexible payment arrangements and accept major credit cards.",
+  },
+  {
+    question: "How long will my case take to resolve?",
+    answer:
+      "The timeline for resolving a legal matter depends on various factors including the complexity of the case, court schedules, and the cooperation of all parties involved. During your initial consultation, we'll provide you with a realistic timeline based on similar cases we've handled.",
+  },
+  {
+    question: "Do you offer contingency fee arrangements?",
+    answer:
+      "Yes, we offer contingency fee arrangements for certain types of cases, particularly personal injury and civil litigation matters. Under this arrangement, our fees are only collected if we successfully resolve your case. This allows clients to access legal representation without upfront costs.",
+  },
+  {
+    question: "What should I bring to my first consultation?",
+    answer:
+      "For your first consultation, please bring any relevant documents related to your legal matter, including contracts, correspondence, court documents, or any other materials that might be pertinent to your case. Also bring a list of questions you have about your situation.",
+  },
+  {
+    question: "Do you handle cases outside of your listed practice areas?",
+    answer:
+      "While we specialize in our listed practice areas, we may be able to assist with related legal matters or provide referrals to trusted colleagues for areas outside our expertise. We recommend discussing your specific needs during a consultation.",
+  },
+  {
+    question: "What is your success rate?",
+    answer:
+      "Our success rate varies by practice area and case complexity. We focus on achieving the best possible outcomes for our clients through thorough preparation, skilled negotiation, and aggressive representation when necessary. We can discuss our track record in cases similar to yours during your consultation.",
+  },
+  {
+    question: "How do I prepare for a court appearance?",
+    answer:
+      "We'll provide you with detailed guidance on preparing for court appearances, including what to expect, how to dress, what documents to bring, and how to conduct yourself in court. Our attorneys will also thoroughly prepare you for any testimony or presentations you need to make.",
+  },
+  {
+    question: "Can I communicate with my attorney outside of office hours?",
+    answer:
+      "We understand that legal matters can arise at any time. While we maintain regular office hours, we provide emergency contact information for urgent matters. For non-emergency communications, we typically respond within 24 hours during business days.",
+  },
+];
+---
+
+<BaseLayout>
+  <section>
+    <Wrapper variant="standard" class="pb-12 pt-48">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-y-8 gap-x-12">
+        <div>
+          <Text
+            tag="h1"
+            variant="displayMD"
+            class="text-accent-800 font-display text-balance"
+          >
+            Frequently Asked Questions
+          </Text>
+          <Text tag="p" variant="textSM" class="text-base-700 mt-2">
+            Don't see your question here? 聯絡我們 for personalized
+            assistance.
+          </Text>
+          <Button
+            size="xs"
+            variant="muted"
+            isLink={true}
+            href="/contact"
+            class="w-full lg:w-fit mt-8"
+          >
+            聯絡我們
+          </Button>
+        </div>
+
+        <div class="lg:col-span-2 divide-y divide-base-100 space-y-4">
+          {
+            faqs.map((faq) => (
+              <details class="transition-colors pb-4 group">
+                <summary class=" text-lg cursor-pointer text-accent-800 flex justify-between items-center group-open:text-secondary-500">
+                  <span>{faq.question}</span>
+                  <Plus
+                    slot="icon"
+                    size="sm"
+                    class="text-base-700 transition-transform group-open:rotate-180 duration-300"
+                  />
+                </summary>
+                <div class="mt-4 text-base-700 leading-relaxed">
+                  <Text tag="p" variant="textBase">
+                    {faq.answer}
+                  </Text>
+                </div>
+              </details>
+            ))
+          }
+        </div>
+      </div>
+    </Wrapper>
+  </section>
+</BaseLayout>

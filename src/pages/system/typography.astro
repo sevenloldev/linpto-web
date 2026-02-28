@@ -1,0 +1,88 @@
+---
+// Fundations
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Text from "@/components/fundations/elements/Text.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+---
+
+<BaseLayout>
+  <Wrapper variant="standard" class="py-12 py-48">
+    <Text
+      tag="h1"
+      class="font-display"
+      variant="displayMD"
+      class="text-accent-800 font-display text-balance"
+      >Typography - Newsreader & Inter
+    </Text>
+
+    <div
+      class="flex flex-col mt-4 font-medium text-accent-800 divide-y divide-base-100 mt-12 lg:mt-24"
+    >
+      <div class="py-8">
+        <Text tag="p" variant="textXS"> Text XS </Text>
+      </div>
+      <div class="py-8">
+        <Text tag="p" variant="textSM"> Text SM </Text>
+      </div>
+      <div class="py-8">
+        <Text tag="p" variant="textBase"> Text Base </Text>
+      </div>
+      <div class="py-8">
+        <Text tag="p" variant="textLG"> Text LG </Text>
+      </div>
+      <div class="py-8">
+        <Text tag="p" variant="textXL"> Text XL </Text>
+      </div>
+      <div class="py-8">
+        <Text tag="p" class="font-display" variant="displayXS">
+          Display XS
+        </Text>
+      </div>
+      <div class="py-8">
+        <Text tag="p" class="font-display" variant="displaySM">
+          Display SM
+        </Text>
+      </div>
+      <div class="py-8">
+        <Text tag="p" class="font-display" variant="displayMD">
+          Display MD
+        </Text>
+      </div>
+      <div class="py-8">
+        <Text tag="p" class="font-display" variant="displayLG">
+          Display LG
+        </Text>
+      </div>
+      <div class="py-8">
+        <Text tag="p" class="font-display" variant="displayXL">
+          Display XL
+        </Text>
+      </div>
+      <div class="py-8">
+        <Text tag="p" class="font-display" variant="display2XL">
+          Display 2XL
+        </Text>
+      </div>
+      <div class="py-8">
+        <Text tag="p" class="font-display" variant="display3XL">
+          Display 3XL
+        </Text>
+      </div>
+      <div class="py-8">
+        <Text tag="p" class="font-display" variant="display4XL">
+          Display 4XL
+        </Text>
+      </div>
+      <div class="py-8">
+        <Text tag="p" class="font-display" variant="display5XL">
+          Display 5XL
+        </Text>
+      </div>
+      <div class="py-8">
+        <Text tag="p" class="font-display" variant="display6XL">
+          Display 6XL
+        </Text>
+      </div>
+    </div>
+  </Wrapper>
+</BaseLayout>

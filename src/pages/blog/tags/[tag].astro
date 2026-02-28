@@ -1,0 +1,49 @@
+---
+// Fundations
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Text from "@/components/fundations/elements/Text.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+// Components
+import SmallBlogCard from "@/components/blog/SmallBlogCard.astro";
+// Content
+import { getCollection } from "astro:content";
+export async function getStaticPaths() {
+  const allPosts = await getCollection("posts");
+  const unique標籤 = [
+    ...new Set(allPosts.map((post) => post.data.tags).flat()),
+  ];
+  return unique標籤.map((tag) => {
+    const filteredPosts = allPosts.filter((post) =>
+      post.data.tags.includes(tag)
+    );
+    return {
+      params: { tag },
+      props: { posts: filteredPosts },
+    };
+  });
+}
+const { tag } = Astro.params;
+const { posts } = Astro.props;
+---
+
+<BaseLayout>
+  <section>
+    <Wrapper variant="standard" class="py-12 lg:py-48">
+      <Text
+        tag="h1"
+        variant="displayXL"
+        class="text-accent-800 font-display text-balance"
+      >
+        All posts tagged with <span class="capitalize">{tag}</span>
+      </Text>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 mt-12 lg:mt-24 gap-8">
+        {
+          posts.map((post, index) => (
+            <SmallBlogCard post={post} index={index + 1} />
+          ))
+        }
+      </div>
+    </Wrapper>
+  </section>
+</BaseLayout>
