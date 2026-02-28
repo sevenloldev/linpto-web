@@ -25,16 +25,14 @@ const searchItems = [...lawyers, ...cases];
 ---
 
 <div class="relative">
-  <Button
-    iconOnly
-    size="sm"
-    variant="muted"
+  <button
     type="button"
     id="searchButton"
+    class="flex items-center justify-center size-11 rounded-lg text-base-900 dark:text-white bg-base-50 dark:bg-base-800 hover:bg-base-100 dark:hover:bg-base-700 transition-colors duration-300 cursor-pointer touch-manipulation"
     aria-label="搜尋內容"
   >
-    <SearchIcon slot="icon" size="base" />
-  </Button>
+    <SearchIcon size="base" />
+  </button>
   <div
     id="searchModal"
     class="fixed inset-0 z-50 overflow-y-auto hidden"
@@ -50,20 +48,21 @@ const searchItems = [...lawyers, ...cases];
       <div
         class="inline-block w-full max-w-2xl px-8 mb-8 mt-12 lg:mt-48 text-left align-middle transition-all transform relative"
       >
-        <div class="hidden">
+        <div class="flex items-center justify-end mb-2">
           <button
             type="button"
             id="closeSearch"
-            class="text-base-400 hover:text-base-500 cursor-pointer ml-auto"
+            class="text-base-300 hover:text-white text-sm cursor-pointer touch-manipulation p-2"
             aria-label="關閉搜尋"
           >
+            ✕ 關閉
           </button>
         </div>
         <input
           type="text"
           id="searchInput"
           placeholder="搜尋律師、案例…"
-          class="w-full flex-auto appearance-none rounded-md outline outline-base-200 dark:outline-base-800 dark:text-white text-base-900 outline-inset border-transparent px-3 py-2 shadow-base-800/5 dark:placeholder:text-base-400 duration-300 h-9 focus:border-base-500 focus:outline-none focus:outline-4 focus:outline-base-500/10 sm:text-sm bg-base-50 dark:bg-base-800"
+          class="w-full flex-auto appearance-none rounded-md outline outline-base-200 dark:outline-base-800 dark:text-white text-base-900 outline-inset border-transparent px-3 py-2 shadow-base-800/5 dark:placeholder:text-base-400 duration-300 h-12 text-base focus:border-base-500 focus:outline-none focus:outline-4 focus:outline-base-500/10 bg-base-50 dark:bg-base-800"
         />
         <div
           id="searchResults"
@@ -75,37 +74,40 @@ const searchItems = [...lawyers, ...cases];
   </div>
 </div>
 <script is:inline define:vars={{ searchItems }}>
-  window.addEventListener("load", () => {
+  function initSearch() {
     const searchButton = document.getElementById("searchButton");
     const searchModal = document.getElementById("searchModal");
     const modalOverlay = document.getElementById("modalOverlay");
     const searchInput = document.getElementById("searchInput");
     const searchResults = document.getElementById("searchResults");
-    const closeSearch = document.getElementById("closeSearch");
+    const closeSearchBtn = document.getElementById("closeSearch");
+
+    if (!searchButton || !searchModal || searchButton.dataset.searchInit) return;
+    searchButton.dataset.searchInit = "true";
+
     const fuse = new Fuse(searchItems, {
       keys: ["title", "description", "collection"],
       threshold: 0.3,
       includeMatches: true,
     });
     searchResults.classList.add("hidden");
-    function openSearch(e) {
-      e.preventDefault();
-      e.stopPropagation();
+
+    function openSearch() {
       searchModal.classList.remove("hidden");
       document.body.style.overflow = "hidden";
-      setTimeout(() => searchInput.focus(), 100);
+      setTimeout(function () {
+        searchInput.focus();
+      }, 150);
     }
-    function closeSearchModal(e) {
-      if (e) {
-        e.preventDefault();
-        e.stopPropagation();
-      }
+
+    function closeSearchModal() {
       searchModal.classList.add("hidden");
       document.body.style.overflow = "";
       searchInput.value = "";
       searchResults.innerHTML = "";
       searchResults.classList.add("hidden");
     }
+
     function renderResults(results) {
       if (!searchInput.value.trim()) {
         searchResults.innerHTML = "";
@@ -113,51 +115,69 @@ const searchItems = [...lawyers, ...cases];
         return;
       }
       if (results.length === 0) {
-        searchResults.innerHTML = `
-        <div class="p-8">
-            <p class="font-medium text-sm text-base-500">
-              找不到相關內容…
-            </p>
-        </div>
-        `;
+        searchResults.innerHTML =
+          '<div class="p-8"><p class="font-medium text-sm text-base-500">找不到相關內容…</p></div>';
         searchResults.classList.remove("hidden");
         return;
       }
       searchResults.innerHTML = results
-        .map(({ item }) => {
-          const meta = item.collectionLabel
-            ? `<div class="flex items-center gap-2"><span class="text-[11px] font-medium text-base-600 bg-base-50 dark:bg-base-900/50 border border-base-200 dark:border-base-800 rounded-full px-2 py-1">${item.collectionLabel}</span></div>`
+        .map(function (r) {
+          var item = r.item;
+          var meta = item.collectionLabel
+            ? '<div class="flex items-center gap-2"><span class="text-[11px] font-medium text-base-600 bg-base-50 dark:bg-base-900/50 border border-base-200 dark:border-base-800 rounded-full px-2 py-1">' +
+              item.collectionLabel +
+              "</span></div>"
             : "";
-          return `
-            <a href="${item.href}" class="block p-8 hover:bg-base-50 duration-300 dark:hover:bg-base-950">
-              ${meta}
-              <h3 class="font-medium text-sm mt-2 text-base-900 dark:text-white block">
-                ${item.title}
-              </h3>
-              <p class="text-base-500 text-xs block">
-                ${item.description}
-              </p>
-            </a>
-          `;
+          return (
+            '<a href="' +
+            item.href +
+            '" class="block p-6 hover:bg-base-50 duration-300 dark:hover:bg-base-950">' +
+            meta +
+            '<h3 class="font-medium text-sm mt-2 text-base-900 dark:text-white block">' +
+            item.title +
+            "</h3>" +
+            '<p class="text-base-500 text-xs block">' +
+            item.description +
+            "</p></a>"
+          );
         })
         .join("");
       searchResults.classList.remove("hidden");
     }
-    searchButton.addEventListener("click", openSearch);
-    searchButton.addEventListener("touchend", openSearch);
-    closeSearch.addEventListener("click", closeSearchModal);
-    closeSearch.addEventListener("touchend", closeSearchModal);
-    modalOverlay.addEventListener("click", closeSearchModal);
-    modalOverlay.addEventListener("touchend", closeSearchModal);
-    searchInput.addEventListener("input", (e) => {
-      const value = e.target.value.trim();
-      const results = value ? fuse.search(value) : [];
+
+    // Use only click — works on both desktop and modern mobile browsers
+    searchButton.addEventListener("click", function (e) {
+      e.stopPropagation();
+      openSearch();
+    });
+
+    closeSearchBtn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      closeSearchModal();
+    });
+
+    modalOverlay.addEventListener("click", function () {
+      closeSearchModal();
+    });
+
+    searchInput.addEventListener("input", function (e) {
+      var value = e.target.value.trim();
+      var results = value ? fuse.search(value) : [];
       renderResults(results);
     });
-    document.addEventListener("keydown", (e) => {
+
+    document.addEventListener("keydown", function (e) {
       if (e.key === "Escape" && !searchModal.classList.contains("hidden")) {
         closeSearchModal();
       }
     });
-  });
+  }
+
+  // Handle both fresh load and bfcache (iOS back/forward)
+  if (document.readyState === "complete") {
+    initSearch();
+  } else {
+    window.addEventListener("load", initSearch);
+  }
+  window.addEventListener("pageshow", initSearch);
 </script>
