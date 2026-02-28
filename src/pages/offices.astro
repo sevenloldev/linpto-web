@@ -2,7 +2,6 @@
 // Assets
 import { Image } from "astro:assets";
 import officeny from "@/images/assets/officeny.png";
-import officela from "@/images/assets/officela.png";
 // Fundations
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Text from "@/components/fundations/elements/Text.astro";
@@ -11,34 +10,21 @@ import Wrapper from "@/components/fundations/containers/Wrapper.astro";
 const offices = [
   {
     office: officeny,
-    name: "Main Office - 台北",
+    name: "台北總所",
     address: "台北市中正區重慶南路一段99號",
     city: "11樓之9",
     phone: "02-2585-2626",
     email: "service@linpto.com.tw",
     description:
-      "Our flagship office in the heart of Manhattan serves clients throughout the Northeast with comprehensive legal services. Located in a modern high-rise with state-of-the-art conference facilities.",
+      "翰霖法律事務所位於台北市中正區，鄰近台北車站，交通便利。辦公空間寬敞明亮，設有專業會議室與客戶接待區，提供舒適的諮詢環境。",
     features: [
-      "24/7 Security",
-      "Conference Rooms",
-      "Client Lounge",
-      "Parking Garage",
+      "專業會議室",
+      "客戶接待區",
+      "近台北車站",
+      "完善無障礙設施",
     ],
     mapEmbed:
-      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3024.221990489111!2d-74.00369368459375!3d40.713129579331854!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a316ba4bf83%3A0xbae5cb597764b!2s123%20Legal%20Avenue%2C%20New%20York%2C%20NY%2010001!5e0!3m2!1sen!2sus!4v1696871234567!5m2!1sen!2sus",
-  },
-  {
-    office: officela,
-    name: "Branch Office - 台北",
-    address: "台北市中正區重慶南路一段99號",
-    city: "11樓之9",
-    phone: "02-2585-2626",
-    email: "service@linpto.com.tw",
-    description:
-      "Serving clients across the West Coast from our Beverly Hills location. Our California office specializes in entertainment law, real estate, and business litigation.",
-    features: ["Ocean Views", "Video Conferencing", "Library", "Valet Parking"],
-    mapEmbed:
-      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3305.7326472360283!2d-118.40060368459375!3d34.069650679331854!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2c75ddc3a5c71%3A0xbae5cb597764b!2s456%20Justice%20Boulevard%2C%20Los%20Angeles%2C%20CA%2090210!5e0!3m2!1sen!2sus!4v1696871234567!5m2!1sen!2sus",
+      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3614.7!2d121.5115!3d25.0445!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442a9099a5e4e3f%3A0x!2z5Y-w5YyX5biC5Lit5q2j5Y2A6YeN5oW25Y2X6Lev5LiA5q61OTnomZ8!5e0!3m2!1szh-TW!2stw!4v1696871234567!5m2!1szh-TW!2stw",
   },
 ];
 ---
@@ -52,17 +38,14 @@ const offices = [
           variant="displayLG"
           class="text-accent-800 font-display text-balance"
         >
-          Our 據點資訊
+          據點資訊
         </Text>
         <Text
           tag="p"
           variant="textSM"
           class="text-base-600 leading-relaxed border-accent-500 mt-2"
         >
-          With offices strategically located in major metropolitan areas,
-          翰霖法律事務所 provides accessible, high-quality legal services to
-          clients nationwide. Each office is equipped with modern facilities and
-          staffed by experienced attorneys ready to serve your legal needs.
+          翰霖法律事務所位於台北市中心，交通便利，為客戶提供優質舒適的法律諮詢環境。歡迎預約來訪。
         </Text>
       </div>
       <div class="grid grid-cols-1 mt-12 gap-8">
@@ -93,7 +76,7 @@ const offices = [
                           variant="textSM"
                           class="font-medium text-accent-800"
                         >
-                          Contact Information
+                          聯絡資訊
                         </Text>
                         <div class="space-y-1 text-sm text-base-700 mt-4">
                           <Text tag="p" variant="textXS">
@@ -122,7 +105,7 @@ const offices = [
                           variant="textSM"
                           class="font-medium text-accent-800"
                         >
-                          Office Features
+                          辦公環境
                         </Text>
                         <ul class="space-y-1 text-sm text-base-700 mt-4 ">
                           {office.features.map((feature) => (
@@ -138,12 +121,12 @@ const offices = [
                   </div>
                   <Button
                     isLink={true}
-                    href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(office.address + ", " + office.city)}`}
+                    href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(office.address + office.city)}`}
                     variant="default"
                     size="xs"
                     class="w-fit mt-12"
                   >
-                    Get Directions
+                    導航前往
                   </Button>
                 </div>
                 <div>
@@ -165,7 +148,7 @@ const offices = [
                       allowfullscreen=""
                       loading="eager"
                       referrerpolicy="no-referrer-when-downgrade"
-                      title={`Map of ${office.name}`}
+                      title={`${office.name}地圖`}
                     />
                   </div>
                 </div>
@@ -184,16 +167,14 @@ const offices = [
               variant="displaySM"
               class="text-accent-800 font-display"
             >
-              Visit us today
+              歡迎來訪
             </Text>
             <Text
               tag="p"
               variant="textSM"
               class="text-base-600 mt-1 lg:text-balance"
             >
-              預約法律諮詢 at any of our convenient locations. Our
-              experienced attorneys are ready to discuss your legal needs and
-              provide the guidance you deserve.
+              歡迎預約法律諮詢，我們的專業律師團隊隨時為您提供協助。
             </Text>
           </div>
 
@@ -207,7 +188,7 @@ const offices = [
               size="sm"
               class="w-full lg:w-fit"
             >
-              Schedule Consultation
+              預約諮詢
             </Button>
             <Button
               isLink={true}

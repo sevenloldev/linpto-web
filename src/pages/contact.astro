@@ -6,31 +6,24 @@ import Button from "@/components/fundations/elements/Button.astro";
 import Wrapper from "@/components/fundations/containers/Wrapper.astro";
 const contactInfo = [
   {
-    label: "Phone",
+    label: "電話",
     value: "02-2585-2626",
     href: "tel:+886225852626",
   },
   {
-    label: "Email",
+    label: "信箱",
     value: "service@linpto.com.tw",
     href: "mailto:service@linpto.com.tw",
   },
   {
-    label: "Address",
-    value: "台北市中正區重慶南路一段99號\n11樓之9",
+    label: "地址",
+    value: "台北市中正區重慶南路一段99號11樓之9",
     href: "#",
   },
 ];
 const officeLocations = [
   {
-    name: "Main Office - 台北",
-    address: "台北市中正區重慶南路一段99號",
-    city: "11樓之9",
-    phone: "02-2585-2626",
-    email: "service@linpto.com.tw",
-  },
-  {
-    name: "Branch Office - 台北",
+    name: "台北總所",
     address: "台北市中正區重慶南路一段99號",
     city: "11樓之9",
     phone: "02-2585-2626",
@@ -38,9 +31,9 @@ const officeLocations = [
   },
 ];
 const businessHours = [
-  { day: "Monday - Friday", hours: "8:00 AM - 6:00 PM" },
-  { day: "Saturday", hours: "9:00 AM - 2:00 PM" },
-  { day: "Sunday", hours: "Closed" },
+  { day: "週一至週五", hours: "09:00 - 18:00" },
+  { day: "週六", hours: "預約制" },
+  { day: "週日", hours: "休息" },
 ];
 ---
 
@@ -79,10 +72,7 @@ const businessHours = [
                       </a>
                     ) : (
                       <Text tag="p" variant="textSM" class="text-base-600">
-                        {info.value
-                          .split("\n")
-                          .map((line) => line.trim())
-                          .join(", ")}
+                        {info.value}
                       </Text>
                     )}
                   </div>
@@ -96,7 +86,7 @@ const businessHours = [
               variant="textXL"
               class="font-display text-accent-800 mb-3"
             >
-              Business Hours
+              營業時間
             </Text>
             <div class="space-y-2 mt-8">
               {
@@ -117,7 +107,7 @@ const businessHours = [
                 for="firstName"
                 class="block text-xs font-medium text-base-300"
               >
-                First Name *
+                姓 *
               </label>
               <input
                 type="text"
@@ -132,7 +122,7 @@ const businessHours = [
                 for="lastName"
                 class="block text-xs font-medium text-base-300"
               >
-                Last Name *
+                名 *
               </label>
               <input
                 type="text"
@@ -145,7 +135,7 @@ const businessHours = [
           </div>
           <div class="space-y-1">
             <label for="email" class="block text-xs font-medium text-base-300">
-              Email Address *
+              電子郵件 *
             </label>
             <input
               type="email"
@@ -171,20 +161,21 @@ const businessHours = [
               for="practiceArea"
               class="block text-xs font-medium text-base-300"
             >
-              Practice Area
+              諮詢領域
             </label>
             <select
               id="practiceArea"
               name="practiceArea"
               class="w-full px-3 py-2 border-b border-transparent h-12 bg-white/5 focus:outline-none focus:bg-white/8 text-white text-xs focus:ring-0"
             >
-              <option value="">Select a practice area</option>
-              <option value="corporate">Corporate Law</option>
-              <option value="criminal">Criminal Defense</option>
-              <option value="family">Family Law</option>
-              <option value="personal-injury">Personal Injury</option>
-              <option value="real-estate">Real Estate</option>
-              <option value="other">Other</option>
+              <option value="">請選擇諮詢領域</option>
+              <option value="litigation">民事訴訟</option>
+              <option value="criminal">刑事辯護</option>
+              <option value="corporate">企業法務</option>
+              <option value="ip">智慧財產權</option>
+              <option value="realestate">不動產法律</option>
+              <option value="family">家事法律</option>
+              <option value="other">其他</option>
             </select>
           </div>
           <div class="space-y-1">
@@ -192,20 +183,20 @@ const businessHours = [
               for="message"
               class="block text-xs font-medium text-base-300"
             >
-              Message *
+              您的訊息 *
             </label>
             <textarea
               id="message"
               name="message"
               rows="5"
               required
-              placeholder="Please describe your legal matter..."
+              placeholder="請簡述您的法律問題…"
               class="w-full px-3 py-2 border-b border-transparent bg-white/5 focus:outline-none focus:bg-white/8 text-white text-xs focus:ring-0"
             ></textarea>
           </div>
 
           <Button variant="muted" size="sm" type="submit" class="w-full">
-            Send Message
+            送出訊息
           </Button>
         </form>
       </div>
@@ -217,12 +208,12 @@ const businessHours = [
           variant="displayMD"
           class="text-accent-800 font-display text-balance"
         >
-          Our 據點資訊
+          據點資訊
         </Text>
-        <div class="grid grid-cols-1 lg:grid-cols-2 mt-12 gap-8">
+        <div class="grid grid-cols-1 mt-12 gap-8">
           {
             officeLocations.map((office) => (
-              <div class="bg-base-50   gap-8">
+              <div class="bg-base-50 gap-8">
                 <div class="p-8">
                   <Text
                     tag="h3"
@@ -252,16 +243,16 @@ const businessHours = [
                     </a>
                   </div>
                 </div>
-                <div class="aspect-video  overflow-hidden">
+                <div class="aspect-video overflow-hidden">
                   <iframe
-                    src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3024.221990489111!2d-74.00369368459375!3d40.713129579331854!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a316ba4bf83%3A0xbae5cb597764b!2s${encodeURIComponent(office.address + ", " + office.city)}!5e0!3m2!1sen!2sus!4v1696871234567!5m2!1sen!2sus`}
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3614.7!2d121.5115!3d25.0445!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442a9099a5e4e3f%3A0x!2z5Y-w5YyX5biC5Lit5q2j5Y2A6YeN5oW25Y2X6Lev5LiA5q61OTnomZ8!5e0!3m2!1szh-TW!2stw!4v1696871234567!5m2!1szh-TW!2stw"
                     width="100%"
                     height="100%"
                     style="border:0;"
                     allowfullscreen=""
                     loading="eager"
                     referrerpolicy="no-referrer-when-downgrade"
-                    title={`Map of ${office.name}`}
+                    title="台北總所地圖"
                   />
                 </div>
               </div>
