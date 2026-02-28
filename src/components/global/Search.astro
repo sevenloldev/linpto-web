@@ -1,5 +1,4 @@
 ---
-import Button from "@/components/fundations/elements/Button.astro";
 import SearchIcon from "@/components/fundations/icons/Search.astro";
 import { getCollection } from "astro:content";
 
@@ -27,100 +26,103 @@ const searchItems = [...lawyers, ...cases];
 <div class="relative">
   <button
     type="button"
-    id="searchButton"
+    data-search-trigger
     class="flex items-center justify-center size-11 rounded-lg text-base-900 dark:text-white bg-base-50 dark:bg-base-800 hover:bg-base-100 dark:hover:bg-base-700 transition-colors duration-300 cursor-pointer touch-manipulation"
     aria-label="搜尋內容"
   >
     <SearchIcon size="base" />
   </button>
-  <div
-    id="searchModal"
-    class="fixed inset-0 z-50 overflow-y-auto hidden"
-    role="dialog"
-    aria-modal="true"
-  >
-    <div class="min-h-screen px-4 text-center">
-      <div
-        class="fixed inset-0 bg-base-950/50 backdrop-blur transition-opacity"
-        id="modalOverlay"
-      >
-      </div>
-      <div
-        class="inline-block w-full max-w-2xl px-8 mb-8 mt-12 lg:mt-48 text-left align-middle transition-all transform relative"
-      >
-        <div class="flex items-center justify-end mb-2">
-          <button
-            type="button"
-            id="closeSearch"
-            class="text-base-300 hover:text-white text-sm cursor-pointer touch-manipulation p-2"
-            aria-label="關閉搜尋"
-          >
-            ✕ 關閉
-          </button>
-        </div>
-        <input
-          type="text"
-          id="searchInput"
-          placeholder="搜尋律師、案例…"
-          class="w-full flex-auto appearance-none rounded-md outline outline-base-200 dark:outline-base-800 dark:text-white text-base-900 outline-inset border-transparent px-3 py-2 shadow-base-800/5 dark:placeholder:text-base-400 duration-300 h-12 text-base focus:border-base-500 focus:outline-none focus:outline-4 focus:outline-base-500/10 bg-base-50 dark:bg-base-800"
-        />
-        <div
-          id="searchResults"
-          class="max-h-100 mt-2 overflow-y-auto bg-white dark:bg-black overflow-hidden w-full divide-y divide-base-200 border-y border-base-200 dark:border-y-black dark:divide-base-900 scrollbar-hide"
+</div>
+
+<!-- Single shared modal (rendered once, outside of nav) -->
+<div
+  data-search-modal
+  class="fixed inset-0 z-[999] overflow-y-auto hidden"
+  role="dialog"
+  aria-modal="true"
+>
+  <div class="min-h-screen px-4 text-center">
+    <div
+      class="fixed inset-0 bg-base-950/50 backdrop-blur transition-opacity"
+      data-search-overlay
+    ></div>
+    <div
+      class="inline-block w-full max-w-2xl px-8 mb-8 mt-12 lg:mt-48 text-left align-middle transition-all transform relative"
+    >
+      <div class="flex items-center justify-end mb-2">
+        <button
+          type="button"
+          data-search-close
+          class="text-base-300 hover:text-white text-sm cursor-pointer touch-manipulation p-2"
+          aria-label="關閉搜尋"
         >
-        </div>
+          ✕ 關閉
+        </button>
       </div>
+      <input
+        type="text"
+        data-search-input
+        placeholder="搜尋律師、案例…"
+        autocomplete="off"
+        autocapitalize="off"
+        class="w-full flex-auto appearance-none rounded-md outline outline-base-200 dark:outline-base-800 dark:text-white text-base-900 outline-inset border-transparent px-4 py-3 shadow-base-800/5 dark:placeholder:text-base-400 duration-300 h-12 text-base focus:border-base-500 focus:outline-none focus:outline-4 focus:outline-base-500/10 bg-base-50 dark:bg-base-800"
+      />
+      <div
+        data-search-results
+        class="max-h-100 mt-2 overflow-y-auto bg-white dark:bg-black overflow-hidden w-full divide-y divide-base-200 border-y border-base-200 dark:border-y-black dark:divide-base-900 scrollbar-hide hidden"
+      ></div>
     </div>
   </div>
 </div>
+
 <script is:inline define:vars={{ searchItems }}>
-  function initSearch() {
-    const searchButton = document.getElementById("searchButton");
-    const searchModal = document.getElementById("searchModal");
-    const modalOverlay = document.getElementById("modalOverlay");
-    const searchInput = document.getElementById("searchInput");
-    const searchResults = document.getElementById("searchResults");
-    const closeSearchBtn = document.getElementById("closeSearch");
+  (function () {
+    if (window.__searchInitialized) return;
+    window.__searchInitialized = true;
 
-    if (!searchButton || !searchModal || searchButton.dataset.searchInit) return;
-    searchButton.dataset.searchInit = "true";
+    var modal = document.querySelector("[data-search-modal]");
+    var overlay = document.querySelector("[data-search-overlay]");
+    var input = document.querySelector("[data-search-input]");
+    var results = document.querySelector("[data-search-results]");
+    var closeBtn = document.querySelector("[data-search-close]");
 
-    const fuse = new Fuse(searchItems, {
+    if (!modal || !input) return;
+
+    var fuse = new Fuse(searchItems, {
       keys: ["title", "description", "collection"],
       threshold: 0.3,
       includeMatches: true,
     });
-    searchResults.classList.add("hidden");
 
     function openSearch() {
-      searchModal.classList.remove("hidden");
+      modal.classList.remove("hidden");
       document.body.style.overflow = "hidden";
       setTimeout(function () {
-        searchInput.focus();
+        input.focus();
       }, 150);
     }
 
-    function closeSearchModal() {
-      searchModal.classList.add("hidden");
+    function closeSearch() {
+      modal.classList.add("hidden");
       document.body.style.overflow = "";
-      searchInput.value = "";
-      searchResults.innerHTML = "";
-      searchResults.classList.add("hidden");
+      input.value = "";
+      results.innerHTML = "";
+      results.classList.add("hidden");
     }
 
-    function renderResults(results) {
-      if (!searchInput.value.trim()) {
-        searchResults.innerHTML = "";
-        searchResults.classList.add("hidden");
+    function renderResults(items) {
+      if (!input.value.trim()) {
+        results.innerHTML = "";
+        results.classList.add("hidden");
         return;
       }
-      if (results.length === 0) {
-        searchResults.innerHTML =
+      if (items.length === 0) {
+        results.innerHTML =
           '<div class="p-8"><p class="font-medium text-sm text-base-500">找不到相關內容…</p></div>';
-        searchResults.classList.remove("hidden");
+        results.classList.remove("hidden");
         return;
       }
-      searchResults.innerHTML = results
+      results.innerHTML = items
         .map(function (r) {
           var item = r.item;
           var meta = item.collectionLabel
@@ -129,55 +131,45 @@ const searchItems = [...lawyers, ...cases];
               "</span></div>"
             : "";
           return (
-            '<a href="' +
-            item.href +
+            '<a href="' + item.href +
             '" class="block p-6 hover:bg-base-50 duration-300 dark:hover:bg-base-950">' +
             meta +
             '<h3 class="font-medium text-sm mt-2 text-base-900 dark:text-white block">' +
-            item.title +
-            "</h3>" +
+            item.title + "</h3>" +
             '<p class="text-base-500 text-xs block">' +
-            item.description +
-            "</p></a>"
+            item.description + "</p></a>"
           );
         })
         .join("");
-      searchResults.classList.remove("hidden");
+      results.classList.remove("hidden");
     }
 
-    // Use only click — works on both desktop and modern mobile browsers
-    searchButton.addEventListener("click", function (e) {
+    // Bind ALL trigger buttons (desktop + mobile)
+    var triggers = document.querySelectorAll("[data-search-trigger]");
+    for (var i = 0; i < triggers.length; i++) {
+      triggers[i].addEventListener("click", function (e) {
+        e.stopPropagation();
+        openSearch();
+      });
+    }
+
+    closeBtn.addEventListener("click", function (e) {
       e.stopPropagation();
-      openSearch();
+      closeSearch();
     });
 
-    closeSearchBtn.addEventListener("click", function (e) {
-      e.stopPropagation();
-      closeSearchModal();
-    });
+    overlay.addEventListener("click", closeSearch);
 
-    modalOverlay.addEventListener("click", function () {
-      closeSearchModal();
-    });
-
-    searchInput.addEventListener("input", function (e) {
+    input.addEventListener("input", function (e) {
       var value = e.target.value.trim();
-      var results = value ? fuse.search(value) : [];
-      renderResults(results);
+      var items = value ? fuse.search(value) : [];
+      renderResults(items);
     });
 
     document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape" && !searchModal.classList.contains("hidden")) {
-        closeSearchModal();
+      if (e.key === "Escape" && !modal.classList.contains("hidden")) {
+        closeSearch();
       }
     });
-  }
-
-  // Handle both fresh load and bfcache (iOS back/forward)
-  if (document.readyState === "complete") {
-    initSearch();
-  } else {
-    window.addEventListener("load", initSearch);
-  }
-  window.addEventListener("pageshow", initSearch);
+  })();
 </script>
